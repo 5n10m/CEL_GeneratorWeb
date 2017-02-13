@@ -1,0 +1,87 @@
+/**
+ * Copyright (c) 2013-2017, xembly.org
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met: 1) Redistributions of source code must retain the above
+ * copyright notice, this list of conditions and the following
+ * disclaimer. 2) Redistributions in binary form must reproduce the above
+ * copyright notice, this list of conditions and the following
+ * disclaimer in the documentation and/or other materials provided
+ * with the distribution. 3) Neither the name of the xembly.org nor
+ * the names of its contributors may be used to endorse or promote
+ * products derived from this software without specific prior written
+ * permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
+ * NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
+ * THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+ * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.xembly;
+
+import java.util.Collection;
+import org.w3c.dom.Node;
+
+/**
+ * Directive.
+ *
+ * <p>Use {@link Directives} to create a collection of them. You don't
+ * need to use this interface directly and make instances of it. Everything
+ * is done through {@link Directives} and {@link Xembler}.
+ *
+ * @author Yegor Bugayenko (yegor@teamed.io)
+ * @version $Id: 3a88dd24d5250c7ffcd74fcd2f4e542b586b8020 $
+ * @since 0.1
+ */
+public interface Directive {
+
+    /**
+     * Execute it in the given document with current position at the given node.
+     * @param dom Document
+     * @param cursor Nodes we're currently at
+     * @param stack Execution stack
+     * @return New current nodes
+     * @throws ImpossibleModificationException If can't do it
+     */
+    Directive.Cursor exec(Node dom, Directive.Cursor cursor,
+        Directive.Stack stack) throws ImpossibleModificationException;
+
+    /**
+     * Cursor.
+     * @since 0.16
+     */
+    interface Cursor extends Collection<Node> {
+    }
+
+    /**
+     * Stack.
+     * @since 0.16
+     */
+    interface Stack {
+        /**
+         * Push cursor (runtime exception if stack is full).
+         * @param cursor Cursor to push
+         * @throws ImpossibleModificationException If fails
+         */
+        void push(Directive.Cursor cursor)
+            throws ImpossibleModificationException;
+        /**
+         * Pop cursor (runtime exception if stack is empty).
+         * @return Cursor recently added
+         * @throws ImpossibleModificationException If fails
+         */
+        Directive.Cursor pop()
+            throws ImpossibleModificationException;
+    }
+
+}

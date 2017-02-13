@@ -1,4 +1,4 @@
-package WebServlets;
+package Servlets;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -34,7 +34,7 @@ public class Core extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-
+            //https://www.youtube.com/watch?v=g1Hzy3nEH18
         }
     }
 

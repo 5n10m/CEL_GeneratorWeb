@@ -1,29 +1,24 @@
-package Servlets;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Servlets;
 
-import com.marcobrador.tfm.cel.db.model.Contract;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashSet;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author david
  */
-@WebServlet(urlPatterns = {"/Core"})
-public class Core extends HttpServlet {
+@WebServlet(name = "Party", urlPatterns = {"/Party"})
+public class Party extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,17 +32,17 @@ public class Core extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        
         try (PrintWriter out = response.getWriter()) {
-            //https://www.youtube.com/watch?v=g1Hzy3nEH18
-            HttpSession session= request.getSession();
-            session.setAttribute("contractId", request.getPart("contractId"));
-            session.setAttribute("governingLaw", request.getParameter("governingLaw"));
-            session.setAttribute("court", request.getParameter("court"));
-            session.setAttribute("textVersion", request.getParameter("textVersion"));
-            RequestDispatcher rd = request.getRequestDispatcher("Partys.html");
-            rd.forward(request, response);
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet Party</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet Party at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

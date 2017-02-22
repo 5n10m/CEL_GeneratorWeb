@@ -5,20 +5,28 @@
  */
 package Servlets;
 
+
+import com.marcobrador.tfm.cel.db.model.Organization;
+import com.marcobrador.tfm.cel.db.model.Party;
+import com.marcobrador.tfm.cel.db.model.Person;
+import com.marcobrador.tfm.cel.db.model.PartyBasicGroup;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashSet;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author david
  */
-@WebServlet(name = "Party", urlPatterns = {"/Party"})
-public class Party extends HttpServlet {
+@WebServlet(name = "PartyOrganization", urlPatterns = {"/PartyOrganization"})
+public class PartyOrganization extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,16 +41,24 @@ public class Party extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Party</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Party at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            /*PartyBasicGroup pbg = new Person.Builder(request.getParameter("name"))
+                .setIdentifier(request.getParameter("identifier"))
+                .setDescription(request.getParameter("description"))
+                .setDetails(request.getParameter("details"))
+                .build();
+            PartyBasicGroup p = new Organization.Builder(request.getParameter("oname"))
+                    .setSignatory(pbg)
+                    .setDescription(request.getParameter("odescription"))
+                    .setIdentifier("oidentifier")
+                    .setDetails("odetails")
+                    .build();
+            Party part = new Party.Builder(request.getParameter("name"), p).setAddress(request.getParameter("oaddress")).build();
+            
+            HttpSession session= request.getSession();
+            session.setAttribute("Party2", part);
+            */
+            RequestDispatcher rd = request.getRequestDispatcher("Partys.html");
+            rd.forward(request, response);
         }
     }
 

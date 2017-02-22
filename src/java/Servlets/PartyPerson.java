@@ -1,16 +1,17 @@
-package Servlets;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Servlets;
 
-import com.marcobrador.tfm.cel.db.model.Body;
-import com.marcobrador.tfm.cel.db.model.Contract;
+import com.marcobrador.tfm.cel.db.model.Organization;
+import com.marcobrador.tfm.cel.db.model.Party;
+import com.marcobrador.tfm.cel.db.model.Person;
+import com.marcobrador.tfm.cel.db.model.PartyBasicGroup;
+import java.lang.String;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashSet;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,8 +24,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author david
  */
-@WebServlet(urlPatterns = {"/Core"})
-public class Core extends HttpServlet {
+@WebServlet(name = "PartyPerson", urlPatterns = {"/PartyPerson"})
+public class PartyPerson extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,28 +39,19 @@ public class Core extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        
-        try (PrintWriter out = response.getWriter()) {
-            //https://www.youtube.com/watch?v=g1Hzy3nEH18
+        try (PrintWriter out = response.getWriter()) { 
+            /*
+            PartyBasicGroup pbg = new Person.Builder(request.getParameter("name"))
+                .setIdentifier(request.getParameter("identifier"))
+                .setDescription(request.getParameter("description"))
+                .setDetails(request.getParameter("details"))
+                .build();
+            Party p = new Party.Builder(request.getParameter("name"), pbg).setAddress(request.getParameter("address")).build();
             HttpSession session= request.getSession();
-            session.invalidate();
-            session = request.getSession();
-            //Body b = new Body();
-            /*Contract c =new Contract();
-            c.setContractId(request.getParameter("contractId"));
-            c.setGoverningLaw(request.getParameter("governingLaw"));
-            c.setCourt(request.getParameter("court"));
-            c.setTextVersion(request.getParameter("textVersion"));
-            session.setAttribute("ontract", c);*/
-            session.setAttribute("contractId", (String) request.getParameter("contractId"));
-            session.setAttribute("governingLaw", (String) request.getParameter("governingLaw"));
-            session.setAttribute("court", (String) request.getParameter("court"));
-            session.setAttribute("textVersion", (String) request.getParameter("textVersion"));
-            
-            response.sendRedirect("party.html");
-            //RequestDispatcher rd = request.getRequestDispatcher("party.html");
-            //rd.forward(request, response);
+            session.setAttribute("Party1", p);
+            */                   
+            RequestDispatcher rd = request.getRequestDispatcher("ChooseOperativePartType.html");
+            rd.forward(request, response);
         }
     }
 

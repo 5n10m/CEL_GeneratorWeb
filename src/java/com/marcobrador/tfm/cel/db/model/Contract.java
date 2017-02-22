@@ -17,6 +17,8 @@ import java.util.Set;
 @XmlRootElement(name = "Contract", namespace = "urn:mpeg:mpeg21:cel:core:2015")
 public class Contract {
 
+
+
     @Id
     @Column
     @XmlAttribute
@@ -50,9 +52,9 @@ public class Contract {
     @XmlElement(name="Body", namespace = "urn:mpeg:mpeg21:cel:core:2015")
     private Body body;
 
-    private Contract() {
-        // Required by JAXB
-    }
+    /*public Contract() {
+           this.isCourtJurisdictionExclusive = false;
+    }*/
 
     private Contract(Builder builder) {
         contractId = builder.contractId;
@@ -91,7 +93,30 @@ public class Contract {
     public Set<Party> getParties() {
         return parties;
     }
+    public void setContractId(String contractId) {
+        this.contractId = contractId;
+    }
 
+    public void setGoverningLaw(String governingLaw) {
+        this.governingLaw = governingLaw;
+    }
+
+    public void setCourt(String court) {
+        this.court = court;
+    }
+
+    public void setTextVersion(String textVersion) {
+        this.textVersion = textVersion;
+    }
+
+    public void setParties(Set<Party> parties) {
+        this.parties = parties;
+    }
+
+    public void setBody(Body body) {
+        this.body = body;
+    }
+    
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

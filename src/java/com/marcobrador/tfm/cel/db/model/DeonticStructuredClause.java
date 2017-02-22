@@ -371,6 +371,8 @@ public abstract class DeonticStructuredClause {
                 @XmlElement(name = "enhance", namespace = "urn:mpeg:mpeg21:2003:01-REL-MX-NS", type = Enhance.class),
                 @XmlElement(name = "issue", namespace = "urn:mpeg:mpeg21:2003:01-REL-R-NS", type = Issue.class),
                 @XmlElement(name = "modify", namespace = "urn:mpeg:mpeg21:2003:01-REL-MX-NS", type = Modify.class)
+                // CEL GENOMIC actions HERE
+                //Here
         })
         private Action action;
 

@@ -1,5 +1,6 @@
 package com.marcobrador.tfm.cel.db.model;
 
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -9,7 +10,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "organizations")
 public class Organization extends PartyBasicGroup {
-
+    
+    private static PartyBasicGroup Signatory;
+    
     private Organization() {
         // Required by JAXB
     }
@@ -27,6 +30,10 @@ public class Organization extends PartyBasicGroup {
 
         public Builder(String name) {
             super(name);
+        }
+        public Builder setSignatory(PartyBasicGroup pbg) {
+            Signatory = pbg;
+            return this;
         }
 
         @Override

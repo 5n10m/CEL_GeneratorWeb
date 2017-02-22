@@ -1,30 +1,24 @@
-package Servlets;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Servlets;
 
-import com.marcobrador.tfm.cel.db.model.Body;
-import com.marcobrador.tfm.cel.db.model.Contract;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashSet;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author david
  */
-@WebServlet(urlPatterns = {"/Core"})
-public class Core extends HttpServlet {
+@WebServlet(name = "DeontonicStructuredClause", urlPatterns = {"/DeontonicStructuredClause"})
+public class DeontonicStructuredClause extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,28 +32,17 @@ public class Core extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        
         try (PrintWriter out = response.getWriter()) {
-            //https://www.youtube.com/watch?v=g1Hzy3nEH18
-            HttpSession session= request.getSession();
-            session.invalidate();
-            session = request.getSession();
-            //Body b = new Body();
-            /*Contract c =new Contract();
-            c.setContractId(request.getParameter("contractId"));
-            c.setGoverningLaw(request.getParameter("governingLaw"));
-            c.setCourt(request.getParameter("court"));
-            c.setTextVersion(request.getParameter("textVersion"));
-            session.setAttribute("ontract", c);*/
-            session.setAttribute("contractId", (String) request.getParameter("contractId"));
-            session.setAttribute("governingLaw", (String) request.getParameter("governingLaw"));
-            session.setAttribute("court", (String) request.getParameter("court"));
-            session.setAttribute("textVersion", (String) request.getParameter("textVersion"));
-            
-            response.sendRedirect("party.html");
-            //RequestDispatcher rd = request.getRequestDispatcher("party.html");
-            //rd.forward(request, response);
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet DeontonicStructuredClause</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet DeontonicStructuredClause at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

@@ -32,6 +32,17 @@
                     <form id ="Person" action="PartyPerson" method="post">
                         <div id="PersonForm" class="animate w3layouts agileits form">
                             <div class="ferry ferry-from">
+                                <label>Rol</label>
+                                <select name="Rol" required="">
+                                    <option value="Analyst">Analyst</option>
+                                    <option value="Custodian">Custodian</option>
+                                    <option value="Forensics">Forensics</option>
+                                    <option value="Individual">Individual</option>
+                                    <option value="Owner">Owner</option>
+                                    <option value="Researcher">Researcher</option>
+                                </select>
+                            </div>
+                            <div class="ferry ferry-from">
                                 <label>Complete Name</label>
                                 <input type="text" name="name" placeholder="Name" required=""/>
                             </div>
@@ -51,10 +62,10 @@
                                 <label>Details</label>
                                 <textarea id="message" name="details" placeholder="Details" title="Enter the analogical-textual version if exists"></textarea>
                             </div>
-                            <div class="ferry ferry-from">
+                            <!-- <div class="ferry ferry-from">
                                 <label>Signature</label>
                                 <textarea id="message" name="signature" placeholder="xml signature" title="copy the xml signature according to http://www.w3.org/2000/09/xmldsig"></textarea>
-                            </div>
+                            </div> -->
                             <div class="wthreesubmitaits">
                                 <input type="submit" name="submit" value="Siguiente">
                             </div>
@@ -82,7 +93,7 @@
                                 <label>Details</label>
                                 <textarea id="message" name="odetails" placeholder="Details" title="Enter the analogical-textual version if exists"></textarea>
                             </div>
-                            <h3> Signatory </h3>
+                            <!-- <h3> Signatory </h3>
                             <div class="ferry ferry-from">
                                 <label>Person Name</label>
                                 <input type="text" name="name" placeholder="Name" required=""/>
@@ -103,6 +114,7 @@
                                 <label>Signature</label>
                                 <textarea id="message" name="signature" placeholder="xml signature" title="copy the xml signature according to http://www.w3.org/2000/09/xmldsig"></textarea>
                             </div>
+                            -->
                             <div class="wthreesubmitaits">
                                 <input type="submit" name="submit" value="Siguiente">
                             </div>
@@ -124,13 +136,14 @@
         </script>
         <script type="text/javascript" >
             function swap_form() {
-                if (document.getElementById('PersonForm').style.visibility == 'visible' ) {
+                if (document.getElementById('PersonForm').style.visibility == 'visible') {
                     document.getElementById('PersonForm').style.visibility = 'hidden';
                     document.getElementById('PersonForm').style.height = '0px';
                     document.getElementById('OrganizationForm').style.visibility = 'visible';
                     document.getElementById('OrganizationForm').style.height = '';
+                    //document.getElementById('OrganizationForm').hidden = 'False';
                     document.getElementById('SwapButton').value = 'Swap to Person';
-                } else{
+                } else {
                     document.getElementById('PersonForm').style.visibility = 'visible';
                     document.getElementById('PersonForm').style.height = '';
                     document.getElementById('OrganizationForm').style.visibility = 'hidden';

@@ -34,9 +34,9 @@
             <div class="w3layoutscontactagileits">
                 <h2>Permision</h2>
                 <div id="wrapper">
-                    <form action="Deontonicstructured" method="post">
+                    <form Id="OperativePart" name="OperativePart" action="DeontonicStructuredClause" method="post">
                         <div id="login" class="animate w3layouts agileits form">
-                            
+
                             <h3> Precondition </h3> <br>
                             <div class="ferry ferry-from">
                                 <label>Precondition Id</label>
@@ -60,32 +60,40 @@
                                 <label>Party Reference</label>
                                 <input type="text" name="PartyRef" placeholder="IdRef" >
                             </div>
-                            <h3> Action </h3><br>
-                             <div class="ferry ferry-from">
+                            <!-- <h3> Act </h3> <br>
+                            <div class="ferry ferry-from">
                                 <label>Type</label>
                                 <select name="type">
-                                    <option value="ViewChromosome">ViewChromosome</option>
-                                    <option value="ViewSequence">ViewSequence</option>
+                                    <option value="Donation">Donation</option>
+                                    <option value="Forensic">Forensic</option>
+                                    <option value="GenethicAnalysis">GenethicAnalysis</option>
+                                    <option value="PaternityTest">PaternityTest</option>
+                                    <option value="ResearchProject">ResearchProject</option>
                                     <option value="View">View</option>
-                                    <option value="ViewFile">ViewFile</option>
+                                </select>
+                            </div> -->
+                            <h3> Action </h3><br>
+                            <div class="ferry ferry-from">
+                                <label>Type</label>
+                                <select name="type">
+                                    <option value="Donation">Donation</option>
+                                    <option value="Forensic">Forensic</option>
+                                    <option value="GenethicAnalysis">GenethicAnalysis</option>
+                                    <option value="PaternityTest">PaternityTest</option>
+                                    <option value="ResearchProject">ResearchProject</option>
+                                    <option value="View">View</option>
                                 </select>
                             </div>
                             <div class="ferry ferry-from">
-                                <label>Chromosome number</label>
+                                <label>Object</label>
                                 <input type="text" name="ChromosomeNumber" placeholder="nº" >
                             </div>
-                            <div class="ferry ferry-from">
-                                <label>Offset</label>
-                                <input type="text" name="Offset" placeholder="Offset" >
-                            </div>
-                            <div class="ferry ferry-from">
-                                <label>Size</label>
-                                <input type="text" name="Size" placeholder="Size" >
-                            </div>
                             <div class="wthreesubmitaits">
-                                <input type="submit" name="submit" value="Siguiente">
+                                <input type="submit" id="SubmitButton" name="submit" value="End and Generate Contract">
+                                <input type="button" id="AddAnotherButton" value="Add another Operative Part" name="AddAnother" onClick ="addanother()"/>
                             </div>
                         </div>
+                        <input type="hidden" id="nextaction" name="nextaction" value=""> 
                     </form>
                 </div>
             </div>
@@ -97,9 +105,15 @@
         <!-- Date-Picker-JavaScript -->
         <script src="js/jquery-ui.js"></script>
         <script>
-                                                                    $(function () {
-                                                                        $("#datepicker,#datepicker1,#datepicker2").datepicker();
-                                                                    });
+            $(function () {
+                $("#datepicker,#datepicker1,#datepicker2").datepicker();
+            });
+        </script>
+        <script type="text/javascript" >
+            function addanother() {
+                document.getElementById("nextaction").value = "AddAnother";
+                document.getElementById('SubmitButton').click();
+            }
         </script>
         <!-- //Date-Picker-JavaScript -->
         <!-- //Necessary-JavaScript-Files-&-Links -->

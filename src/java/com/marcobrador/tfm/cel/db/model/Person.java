@@ -9,6 +9,8 @@ import javax.persistence.*;
 @Table(name = "persons")
 public class Person extends PartyBasicGroup {
 
+    
+    
     private Person() {
         // Required by JAXB
     }

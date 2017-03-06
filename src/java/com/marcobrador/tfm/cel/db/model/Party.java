@@ -25,6 +25,8 @@ public class Party {
     @XmlAttribute
     private String id;
 
+    private String rol;
+    
     @Column
     @XmlElement(name = "Address", namespace = "urn:mpeg:mpeg21:cel:core:2015")
     private String address;
@@ -42,6 +44,7 @@ public class Party {
 
     protected Party(Builder builder) {
         id = builder.id;
+        rol = builder.rol;
         address = builder.address;
         partyBasicGroup = builder.partyBasicGroup;
     }
@@ -92,6 +95,7 @@ public class Party {
 
     public static class Builder {
         private final String id;
+        private String rol;
         private String address;
         private final PartyBasicGroup partyBasicGroup;
 
@@ -102,6 +106,11 @@ public class Party {
 
         public Builder setAddress(String val) {
             address = val;
+            return this;
+        }
+        
+        public Builder setRol(String val) {
+            rol = val;
             return this;
         }
 

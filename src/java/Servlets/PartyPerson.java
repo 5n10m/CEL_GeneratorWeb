@@ -40,16 +40,16 @@ public class PartyPerson extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) { 
-            /*
-            PartyBasicGroup pbg = new Person.Builder(request.getParameter("name"))
+            
+            /*PartyBasicGroup pbg = new Person.Builder(request.getParameter("name"))
                 .setIdentifier(request.getParameter("identifier"))
                 .setDescription(request.getParameter("description"))
                 .setDetails(request.getParameter("details"))
                 .build();
-            Party p = new Party.Builder(request.getParameter("name"), pbg).setAddress(request.getParameter("address")).build();
+            Party p = new Party.Builder(request.getParameter("name"), pbg).setAddress(request.getParameter("address")).setRol(request.getParameter("Rol")).build();
             HttpSession session= request.getSession();
             session.setAttribute("Party1", p);
-            */                   
+               */               
             RequestDispatcher rd = request.getRequestDispatcher("ChooseOperativePartType.html");
             rd.forward(request, response);
         }

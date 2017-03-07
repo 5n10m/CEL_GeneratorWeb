@@ -72,7 +72,14 @@
                                     <option value="View">View</option>
                                 </select>
                             </div> -->
-                            <h3> Action </h3><br>
+                            <h3> Action </h3><br><select name="type">
+                                <option value="Donation">Donation</option>
+                                <option value="Forensic">Forensic</option>
+                                <option value="GenethicAnalysis">GenethicAnalysis</option>
+                                <option value="PaternityTest">PaternityTest</option>
+                                <option value="ResearchProject">ResearchProject</option>
+                                <option value="View">View</option>
+                            </select>
                             <div class="ferry ferry-from">
                                 <label>Type</label>
                                 <select name="type">
@@ -84,9 +91,33 @@
                                     <option value="View">View</option>
                                 </select>
                             </div>
+                            <h3> Object </h3><br>
                             <div class="ferry ferry-from">
-                                <label>Object</label>
-                                <input type="text" name="ChromosomeNumber" placeholder="nº" >
+                                <label>Type</label>
+                                <select id="ObjectType" name="type" onchange="onObjectTypeChange()">
+                                    <option value="Item">Item</option>
+                                    <option value="Event">Event</option>
+                                    <option value="Subject">Subject</option>
+                                    <option value="Service">Service</option>
+                                </select>
+                            </div>
+                            <div id="variableObjectDiv" class="ferry ferry-from">
+
+                            </div>
+                            <h3> Resultant Object </h3><br>
+                            <div class="ferry ferry-from">
+                                <label>Item Identifier</label>
+                                        <input type="text" name="ObjectIdentifier" placeholder="IdRef" required="">
+                                        <label>Item Type</label>
+                                        <select name="ItemType">
+                                            <option value="Alignment">Alignment</option>
+                                            <option value="AnonymizedGenomaData">AnonymizedGenomaData</option>
+                                            <option value="CompleteGenome">CompleteGenome</option>
+                                            <option value="NonAlignedReads">NonAlignedReads</option>
+                                            <option value="OutcomeGeneticAnalysis">OutcomeGeneticAnalysis</option>
+                                            <option value="RegionsOfVariant">RegionsOfVariant</option>
+                                            <option value="Sequence">Sequence</option>
+                                        </select>
                             </div>
                             <div class="wthreesubmitaits">
                                 <input type="submit" id="SubmitButton" name="submit" value="End and Generate Contract">
@@ -105,14 +136,81 @@
         <!-- Date-Picker-JavaScript -->
         <script src="js/jquery-ui.js"></script>
         <script>
-            $(function () {
-                $("#datepicker,#datepicker1,#datepicker2").datepicker();
-            });
+                                    $(function () {
+                                        $("#datepicker,#datepicker1,#datepicker2").datepicker();
+                                    });
         </script>
         <script type="text/javascript" >
             function addanother() {
                 document.getElementById("nextaction").value = "AddAnother";
                 document.getElementById('SubmitButton').click();
+            }
+            function onObjectTypeChange() {
+                switch (document.getElementById("ObjectType").value) {
+                    case "Item":
+                        var element = document.getElementById("VariableContent");
+                        if (element != null) {
+                            element.outerHTML = "";
+                            delete element;
+                        }
+                        //document.getElementById('VariableContent').removedNode();
+                        var div = document.createElement('div');
+                        div.id = 'VariableContent';
+                        div.innerHTML = '<label>Item Identifier</label>\
+                                        <input type="text" name="ObjectIdentifier" placeholder="IdRef" required="">\
+                                        <label>Item Type</label>\
+                                        <select name="ItemType">\
+                                            <option value="Alignment">Alignment</option>\
+                                            <option value="AnonymizedGenomaData">AnonymizedGenomaData</option>\
+                                            <option value="CompleteGenome">CompleteGenome</option>\
+                                            <option value="NonAlignedReads">NonAlignedReads</option>\
+                                            <option value="OutcomeGeneticAnalysis">OutcomeGeneticAnalysis</option>\
+                                            <option value="RegionsOfVariant">RegionsOfVariant</option>\
+                                            <option value="Sequence">Sequence</option>\
+                                        </select>';
+                        document.getElementById('variableObjectDiv').appendChild(div);
+                        break;
+                    case "Event":
+                        var element = document.getElementById("VariableContent");
+                        if (element != null) {
+                            element.outerHTML = "";
+                            delete element;
+                        }
+                        var div = document.createElement('div');
+                        div.id = 'VariableContent';
+                        div.innerHTML = '<label>Event Identifier</label>\
+                                        <input type="text" name="EventIdentifier" placeholder="IdRef" required="">\
+                                        <label>Event Type</label>\
+                                        <select name="EventType">\
+                                            <option value="MoreExperiments">MoreExperiments</option>\
+                                        </select>';
+                        document.getElementById('variableObjectDiv').appendChild(div);
+                        break;
+                    case "Subject":
+                        var element = document.getElementById("VariableContent");
+                        if (element != null) {
+                            element.outerHTML = "";
+                            delete element;
+                        }
+                        var div = document.createElement('div');
+                        div.id = 'VariableContent';
+                        div.innerHTML = '<label>Subject Identifier</label>\
+                                        <input type="text" name="SubjectIdentifier" placeholder="IdRef" required="">';
+                        document.getElementById('variableObjectDiv').appendChild(div);
+                        break;
+                    case "Service":
+                        var element = document.getElementById("VariableContent");
+                        if (element != null) {
+                            element.outerHTML = "";
+                            delete element;
+                        }
+                        var div = document.createElement('div');
+                        div.id = 'VariableContent';
+                        div.innerHTML = '<label>PORDEFINIR</label>\
+                                        <input type="text" name="EventIdentifier" placeholder="PORDEFINIR" required="">';
+                        document.getElementById('variableObjectDiv').appendChild(div);
+                        break;
+                }
             }
         </script>
         <!-- //Date-Picker-JavaScript -->

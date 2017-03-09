@@ -1,6 +1,7 @@
 package com.marcobrador.tfm.cel.db.model.actions;
 
 import com.marcobrador.tfm.cel.db.Utils;
+import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -10,7 +11,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "actions_consume")
-public class GenethicAnalysis extends Action {
+public class GenethicAnalysis extends Action implements Serializable{
 
     @Override
     public boolean equals(Object obj) {

@@ -13,13 +13,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.marcobrador.tfm.cel.db.model.*;
+import com.marcobrador.tfm.cel.db.model.actions.*;
+import java.io.Serializable;
 
 /**
  *
  * @author david
  */
-@WebServlet(name = "DeontonicStructuredClause", urlPatterns = {"/DeontonicStructuredClause"})
-public class DeontonicStructuredClause extends HttpServlet {
+@WebServlet(name = "DeonticStructuredClause", urlPatterns = {"/DeonticStructuredClause"})
+public class DeonticStructuredClause extends HttpServlet implements Serializable{
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,7 +38,58 @@ public class DeontonicStructuredClause extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            if (request.getParameter("nextaction") == "AddAnother") {
+            /*PreCondition pc = new PreCondition(0, request.getParameter("PreConditionId"), response, clause);
+            request.getParameter("PreConditionId")
+                    request.getParameter("PreConditionActionStarted")
+                    request.getParameter("PreConditionActionDone")
+                    request.getParameter("PreConditionDelay")
+                    request.getParameter("PreConditionValidity")
+                            */
+            Action a;
+            switch (request.getParameter("ActionType")){
+                case "GenethicAnalysis":
+                    a = new GenethicAnalysis();
+                    break;
+                case "Donation":
+                    a = new Donation();
+                    break;
+                case "View":
+                    a = new View();
+                    break;
+                case "ResearchProject":
+                    a = new ResearchProject();
+                    break;
+                case "PaternityTest":
+                    a = new PaternityTest();
+                    break;
+                case "Forensic":
+                    a = new Forensic();
+                    break;
+            }
+            
+            switch(request.getParameter("ObjectType")){
+                case "Event":
+                    Event e = new Event.Builder().setName(request.getParameter("EventType")).setRelatedIdentifier(new RelatedIdentifier(request.getParameter("EventIdentifier"))).build();
+                    
+                    break;
+                case "Item":
+                    Item i = new Item.Builder().setName(request.getParameter("ItemType")).setRelatedIdentifier(new RelatedIdentifier(request.getParameter("ItemIdentifier"))).build();
+                    
+                    break;
+                case "Subject":
+                    String IdRef = request.getParameter("SubjectIdentifier");
+                    break;
+                case "Service":
+                    
+                    break;
+                
+            }            
+            
+            if (request.getParameter("nextaction") != "") {  // PORQUE COJONES NO FUNCIONA?
+                RequestDispatcher rd = request.getRequestDispatcher("ChooseOperativePartType.html");
+                rd.forward(request, response);
+            }
+            else{
                 RequestDispatcher rd = request.getRequestDispatcher("ChooseOperativePartType.html");
                 rd.forward(request, response);
             }

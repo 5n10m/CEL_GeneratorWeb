@@ -1,5 +1,6 @@
 package com.marcobrador.tfm.cel.db.model.actions;
 
+import java.io.Serializable;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -8,7 +9,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Action {
+public abstract class Action implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column

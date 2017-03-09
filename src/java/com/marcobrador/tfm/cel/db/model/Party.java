@@ -1,6 +1,7 @@
 package com.marcobrador.tfm.cel.db.model;
 
 import com.marcobrador.tfm.cel.db.Utils;
+import java.io.Serializable;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -13,7 +14,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "Parties")
-public class Party {
+public class Party implements Serializable{
     // TODO: the ID in the database should belong to a legal ID (national ID number or similar)
     @Id
     @Column

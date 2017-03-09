@@ -1,5 +1,6 @@
 package com.marcobrador.tfm.cel.db.model;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -16,7 +17,7 @@ import javax.xml.bind.annotation.XmlElement;
  */
 @Entity
 @Table(name = "items")
-public class Item {
+public class Item implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

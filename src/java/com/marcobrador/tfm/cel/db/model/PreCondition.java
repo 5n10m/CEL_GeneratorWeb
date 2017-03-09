@@ -1,5 +1,6 @@
 package com.marcobrador.tfm.cel.db.model;
 
+import java.io.Serializable;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlTransient;
@@ -9,7 +10,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "pre_conditions")
-public class PreCondition {
+public class PreCondition implements Serializable{
 
     enum ActionStatus {
         ActionStarted,
@@ -58,4 +59,12 @@ public class PreCondition {
                 ", actionStatus=" + actionStatus +
                 '}';
     }
+
+    public PreCondition(int id, String idref, ActionStatus actionStatus, DeonticStructuredClause clause) {
+        this.id = id;
+        this.idref = idref;
+        this.actionStatus = actionStatus;
+        this.clause = clause;
+    }
+    
 }

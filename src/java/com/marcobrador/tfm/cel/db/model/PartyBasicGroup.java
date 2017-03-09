@@ -1,6 +1,7 @@
 package com.marcobrador.tfm.cel.db.model;
 
 import com.marcobrador.tfm.cel.db.Utils;
+import java.io.Serializable;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
@@ -11,7 +12,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-public abstract class PartyBasicGroup {
+public abstract class PartyBasicGroup implements Serializable{
     // TODO: the ID in the database should belong to a legal ID (national ID number or similar)
     @Id
     @Column

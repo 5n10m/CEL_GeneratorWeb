@@ -1,5 +1,6 @@
 package com.marcobrador.tfm.cel.db.model;
 
+import java.io.Serializable;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.xml.bind.annotation.XmlElement;
@@ -8,7 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
  * Class representing the cel-core:Body complex type.
  */
 @Embeddable
-public class Body {
+public class Body implements Serializable{
 
     // TODO: missing textual part
 

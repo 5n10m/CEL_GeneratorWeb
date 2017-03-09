@@ -34,26 +34,28 @@
             <div class="w3layoutscontactagileits">
                 <h2>Permision</h2>
                 <div id="wrapper">
-                    <form Id="OperativePart" name="OperativePart" action="DeontonicStructuredClause" method="post">
+                    <form Id="OperativePart" name="OperativePart" action="DeonticStructuredClause" method="post">
                         <div id="login" class="animate w3layouts agileits form">
 
                             <h3> Precondition </h3> <br>
                             <div class="ferry ferry-from">
                                 <label>Precondition Id</label>
-                                <input type="text" name="preconditionId" placeholder="Id">
+                                <input type="text" name="PreConditionId" placeholder="Id">
                             </div>
                             <div class="ferry ferry-from">
                                 <label>Action Status</label>
-                                <input type="text" name="ActionStarted" placeholder="Action started">
-                                <input type="text" name="ActionDone" placeholder="Action Done">
+                                <input type="text" name="PreConditionActionStarted" placeholder="Action started">
+                                <input type="text" name="PreConditionActionDone" placeholder="Action Done">
                             </div>
                             <div class="ferry ferry-from">
                                 <label>Delay</label>
-                                <input type="text" name="Delay" placeholder="Delay" >
+                                <input type="text" name="PreConditionDelay" placeholder="Delay" >
                             </div>
                             <div class="ferry ferry-from">
                                 <label>Validity</label>
-                                <input type="text" name="Validity" placeholder="Validity" >
+                                <input class="date agileits w3layouts" name="PreConditionValidity" id="datepicker2" type="text" value="Date" onfocus="this.value = '';" onblur="if (this.value == '') {
+                                            this.value = '';
+                                        }">
                             </div>
                             <h3> Subject </h3> <br>
                             <div class="ferry ferry-from">
@@ -72,17 +74,10 @@
                                     <option value="View">View</option>
                                 </select>
                             </div> -->
-                            <h3> Action </h3><br><select name="type">
-                                <option value="Donation">Donation</option>
-                                <option value="Forensic">Forensic</option>
-                                <option value="GenethicAnalysis">GenethicAnalysis</option>
-                                <option value="PaternityTest">PaternityTest</option>
-                                <option value="ResearchProject">ResearchProject</option>
-                                <option value="View">View</option>
-                            </select>
+                            <h3> Action </h3><br>
                             <div class="ferry ferry-from">
                                 <label>Type</label>
-                                <select name="type">
+                                <select name="ActionType">
                                     <option value="Donation">Donation</option>
                                     <option value="Forensic">Forensic</option>
                                     <option value="GenethicAnalysis">GenethicAnalysis</option>
@@ -102,22 +97,54 @@
                                 </select>
                             </div>
                             <div id="variableObjectDiv" class="ferry ferry-from">
-
+                                <div id ="VariableContent">
+                                    <label>Item Identifier</label>
+                                    <input type="text" name="ObjectIdentifier" placeholder="IdRef" required="">
+                                    <label>Item Type</label>
+                                    <select name="ItemType">
+                                        <option value="Alignment">Alignment</option>
+                                        <option value="AnonymizedGenomaData">AnonymizedGenomaData</option>
+                                        <option value="CompleteGenome">CompleteGenome</option>
+                                        <option value="NonAlignedReads">NonAlignedReads</option>
+                                        <option value="OutcomeGeneticAnalysis">OutcomeGeneticAnalysis</option>
+                                        <option value="RegionsOfVariant">RegionsOfVariant</option>
+                                        <option value="Sequence">Sequence</option>
+                                    </select>
+                                </div>
                             </div>
                             <h3> Resultant Object </h3><br>
                             <div class="ferry ferry-from">
                                 <label>Item Identifier</label>
-                                        <input type="text" name="ObjectIdentifier" placeholder="IdRef" required="">
-                                        <label>Item Type</label>
-                                        <select name="ItemType">
-                                            <option value="Alignment">Alignment</option>
-                                            <option value="AnonymizedGenomaData">AnonymizedGenomaData</option>
-                                            <option value="CompleteGenome">CompleteGenome</option>
-                                            <option value="NonAlignedReads">NonAlignedReads</option>
-                                            <option value="OutcomeGeneticAnalysis">OutcomeGeneticAnalysis</option>
-                                            <option value="RegionsOfVariant">RegionsOfVariant</option>
-                                            <option value="Sequence">Sequence</option>
-                                        </select>
+                                <input type="text" name="ObjectIdentifier" placeholder="IdRef" required="">
+                                <label>Item Type</label>
+                                <select name="ItemType">
+                                    <option value="Alignment">Alignment</option>
+                                    <option value="AnonymizedGenomaData">AnonymizedGenomaData</option>
+                                    <option value="CompleteGenome">CompleteGenome</option>
+                                    <option value="NonAlignedReads">NonAlignedReads</option>
+                                    <option value="OutcomeGeneticAnalysis">OutcomeGeneticAnalysis</option>
+                                    <option value="RegionsOfVariant">RegionsOfVariant</option>
+                                    <option value="Sequence">Sequence</option>
+                                </select>
+                            </div>
+                            <h3> PostCondition </h3> <br>
+                            <div class="ferry ferry-from">
+                                <label>Precondition Id</label>
+                                <input type="text" name="PostConditionId" placeholder="Id">
+                            </div>
+                            <div class="ferry ferry-from">
+                                <label>Action Status</label>
+                                <input type="text" name="PostConditionActionStarted" placeholder="Action started">
+                                <input type="text" name="PostConditionActionDone" placeholder="Action Done">
+                            </div>
+                            <div class="ferry ferry-from">
+                                <label>Delay</label>
+                                <input type="text" name="PostConditionDelay" placeholder="Delay" >
+                            </div>
+                            <div class="ferry ferry-from">
+                                <label>Validity</label>
+                                <input class="date agileits w3layouts" name="PostConditionValidity" id="datepicker2" type="text" value="Date" onfocus="this.value = '';" onblur="if (this.value == '') {
+                                            this.value = '';}">
                             </div>
                             <div class="wthreesubmitaits">
                                 <input type="submit" id="SubmitButton" name="submit" value="End and Generate Contract">
@@ -157,7 +184,7 @@
                         var div = document.createElement('div');
                         div.id = 'VariableContent';
                         div.innerHTML = '<label>Item Identifier</label>\
-                                        <input type="text" name="ObjectIdentifier" placeholder="IdRef" required="">\
+                                        <input type="text" name="ItemIdentifier" placeholder="IdRef" required="">\
                                         <label>Item Type</label>\
                                         <select name="ItemType">\
                                             <option value="Alignment">Alignment</option>\

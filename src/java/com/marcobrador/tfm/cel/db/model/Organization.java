@@ -1,6 +1,7 @@
 package com.marcobrador.tfm.cel.db.model;
 
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -9,7 +10,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "organizations")
-public class Organization extends PartyBasicGroup {
+public class Organization extends PartyBasicGroup implements Serializable{
     
     private static PartyBasicGroup Signatory;
     

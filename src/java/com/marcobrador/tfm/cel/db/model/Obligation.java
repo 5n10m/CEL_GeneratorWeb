@@ -1,5 +1,6 @@
 package com.marcobrador.tfm.cel.db.model;
 
+import java.io.Serializable;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
@@ -8,7 +9,7 @@ import javax.persistence.Entity;
  */
 @Entity
 @DiscriminatorValue("obligation")
-public class Obligation extends DeonticStructuredClause {
+public class Obligation extends DeonticStructuredClause  implements Serializable{
 
     private Obligation() {
         // Required by JAXB
@@ -27,5 +28,9 @@ public class Obligation extends DeonticStructuredClause {
         public Obligation build() {
             return new Obligation(this);
         }
+    }
+    
+    public String getType() {
+        return "Obligation";
     }
 }

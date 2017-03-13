@@ -25,6 +25,14 @@ public class Event implements Serializable {
         relatedIdentifier = builder.relatedIdentifier;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public RelatedIdentifier getRelatedIdentifier() {
+        return relatedIdentifier;
+    }
+
     public boolean equals(Object o) {
         if (this == o) {
             return true;

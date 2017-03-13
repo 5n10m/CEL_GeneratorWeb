@@ -1,5 +1,6 @@
 package com.marcobrador.tfm.cel.db.model;
 
+import java.io.Serializable;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
@@ -8,7 +9,7 @@ import javax.persistence.Entity;
  */
 @Entity
 @DiscriminatorValue("prohibition")
-public class Prohibition extends DeonticStructuredClause {
+public class Prohibition extends DeonticStructuredClause implements Serializable {
 
     private Prohibition() {
         // Required by JAXB
@@ -27,5 +28,9 @@ public class Prohibition extends DeonticStructuredClause {
         public Prohibition build() {
             return new Prohibition(this);
         }
+    }
+
+    public String getType() {
+        return "Prohibition";
     }
 }

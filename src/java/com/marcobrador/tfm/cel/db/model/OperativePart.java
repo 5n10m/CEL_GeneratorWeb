@@ -1,6 +1,7 @@
 package com.marcobrador.tfm.cel.db.model;
 
 import com.marcobrador.tfm.cel.db.Utils;
+import java.io.Serializable;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
@@ -12,7 +13,7 @@ import java.util.Set;
  * Class that represents the cel-core:OperativePart complex type.
  */
 @Embeddable
-public class OperativePart {
+public class OperativePart implements Serializable{
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "contract_contractId")

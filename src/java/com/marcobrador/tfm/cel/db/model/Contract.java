@@ -1,6 +1,7 @@
 package com.marcobrador.tfm.cel.db.model;
 
 import com.marcobrador.tfm.cel.db.Utils;
+import java.io.Serializable;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -15,7 +16,7 @@ import java.util.Set;
 @Entity
 @Table(name = "Contracts")
 @XmlRootElement(name = "Contract", namespace = "urn:mpeg:mpeg21:cel:core:2015")
-public class Contract {
+public class Contract implements Serializable{
 
 
 
@@ -50,7 +51,7 @@ public class Contract {
 
     @Embedded
     @XmlElement(name="Body", namespace = "urn:mpeg:mpeg21:cel:core:2015")
-    private Body body;
+    private Set<Body> bodies;
 
     /*public Contract() {
            this.isCourtJurisdictionExclusive = false;
@@ -63,7 +64,7 @@ public class Contract {
         isCourtJurisdictionExclusive = builder.isCourtJurisdictionExclusive;
         textVersion = builder.textVersion;
         parties = builder.parties;
-        body = builder.body;
+        bodies = builder.bodies;
     }
 
     public String getContractId() {
@@ -82,8 +83,8 @@ public class Contract {
         return isCourtJurisdictionExclusive;
     }
 
-    public Body getBody() {
-        return body;
+    public Set<Body> getBody() {
+        return bodies;
     }
 
     public String getTextVersion() {
@@ -109,13 +110,6 @@ public class Contract {
         this.textVersion = textVersion;
     }
 
-    public void setParties(Set<Party> parties) {
-        this.parties = parties;
-    }
-
-    public void setBody(Body body) {
-        this.body = body;
-    }
     
     @Override
     public String toString() {
@@ -136,7 +130,17 @@ public class Contract {
         } else {
             builder.append("Contract is a template, no parties involved\n");
         }
-        builder.append(body);
+        //builder.append(body);
+        if (bodies != null) {
+            builder.append("Clauses involved in the contract:\n");
+            for (Body body : bodies) {
+                builder.append("[Clause Start]\n");
+                builder.append(body);
+                builder.append("\n[Clause End]\n\n");
+            }
+        } else {
+            builder.append("No clauses added for the moment\n");
+        }
         builder.append("Text Version: " + textVersion + "\n");
         return builder.toString();
     }
@@ -159,21 +163,22 @@ public class Contract {
                 && this.isCourtJurisdictionExclusive == other.isCourtJurisdictionExclusive
                 && this.textVersion.equals(other.textVersion)
                 && this.parties.equals(other.parties)
-                && this.body.equals(other.body);
+                && this.bodies.equals(other.bodies);
     }
 
-    public static final class Builder {
+    public static final class Builder implements Serializable{
         private final String contractId;
         private String governingLaw;
         private String court;
         private boolean isCourtJurisdictionExclusive;
         private String textVersion;
         private Set<Party> parties;
-        private final Body body;
+        private /*final*/ Set<Body> bodies;
 
-        public Builder(String contractId, Body body) {
+        public Builder(String contractId/*, Body body*/) {
             this.contractId = contractId;
-            this.body = body;
+            //this.body = body;
+            bodies = new HashSet<Body>();
             parties = new HashSet<Party>();
         }
 
@@ -199,6 +204,10 @@ public class Contract {
 
         public Builder addParty(Party party) {
             parties.add(party);
+            return this;
+        }
+        public Builder addBody(Body body) {
+            bodies.add(body);
             return this;
         }
 

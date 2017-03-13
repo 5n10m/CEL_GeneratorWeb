@@ -8,7 +8,8 @@ package Servlets;
 import com.marcobrador.tfm.cel.db.model.Organization;
 import com.marcobrador.tfm.cel.db.model.Party;
 import com.marcobrador.tfm.cel.db.model.Person;
-import com.marcobrador.tfm.cel.db.model.PartyBasicGroup;
+import com.marcobrador.tfm.cel.db.model.PartyBasicGroup;;
+import com.marcobrador.tfm.cel.db.model.Contract;
 import java.lang.String;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -48,8 +49,10 @@ public class PartyPerson extends HttpServlet {
                 .build();
             Party p = new Party.Builder(request.getParameter("name"), pbg).setAddress(request.getParameter("address")).setRol(request.getParameter("Rol")).build();
             HttpSession session= request.getSession(true);
-            session.setAttribute("Party1", p);        
-            RequestDispatcher rd = request.getRequestDispatcher("ChooseOperativePartType.html");
+            Contract.Builder cb = (Contract.Builder)session.getAttribute("Contract");
+            cb.addParty(p);
+            session.setAttribute("Contract", cb);        
+            RequestDispatcher rd = request.getRequestDispatcher("operativePart.html");
             rd.forward(request, response);
         }
     }

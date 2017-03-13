@@ -35,6 +35,22 @@ public class Item implements Serializable{
     @OneToOne
     private DeonticStructuredClause clause;
 
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public RelatedIdentifier getRelatedIdentifier() {
+        return relatedIdentifier;
+    }
+
+    public DeonticStructuredClause getClause() {
+        return clause;
+    }
+
     private Item() {
         // Required by JAXB
     }

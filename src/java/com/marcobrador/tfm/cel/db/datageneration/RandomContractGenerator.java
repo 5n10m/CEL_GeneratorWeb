@@ -80,8 +80,9 @@ public class RandomContractGenerator {
             randomId = -1 * randomId;
         }
         String contractId = producer.getId() + "_" + broadcaster.getId() + "_" + series.getName() + "_" + randomId;
-        Contract contract = new Contract.Builder(contractId.toLowerCase().replaceAll("\\s",""), body)
+        Contract contract = new Contract.Builder(contractId.toLowerCase().replaceAll("\\s",""))
                 .addParty(producer)
+                .addBody(body)
                 .addParty(broadcaster)
                 .setTextVersion("Not available")
                 .build();

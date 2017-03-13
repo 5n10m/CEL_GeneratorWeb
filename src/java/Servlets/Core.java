@@ -42,20 +42,19 @@ public class Core extends HttpServlet {
         
         try (PrintWriter out = response.getWriter()) {
             //https://www.youtube.com/watch?v=g1Hzy3nEH18
-            HttpSession session= request.getSession();
+            HttpSession session= request.getSession(true);
             session.invalidate();
             session = request.getSession();
             //Body b = new Body();
-            /*Contract c =new Contract();
-            c.setContractId(request.getParameter("contractId"));
-            c.setGoverningLaw(request.getParameter("governingLaw"));
-            c.setCourt(request.getParameter("court"));
-            c.setTextVersion(request.getParameter("textVersion"));
-            session.setAttribute("ontract", c);*/
-            session.setAttribute("contractId", (String) request.getParameter("contractId"));
+            Contract.Builder cb =new Contract.Builder(request.getParameter("contractId"));
+            if (request.getParameter("governingLaw").length() > 0) cb.setGoverningLaw(request.getParameter("governingLaw"));
+            if (request.getParameter("court").length() > 0) cb.setCourt(request.getParameter("court"));
+            if (request.getParameter("textVersion").length() > 0) cb.setTextVersion(request.getParameter("textVersion"));
+            session.setAttribute("Contract", cb);
+            /*session.setAttribute("contractId", (String) request.getParameter("contractId"));
             session.setAttribute("governingLaw", (String) request.getParameter("governingLaw"));
             session.setAttribute("court", (String) request.getParameter("court"));
-            session.setAttribute("textVersion", (String) request.getParameter("textVersion"));
+            session.setAttribute("textVersion", (String) request.getParameter("textVersion"));*/
             
             response.sendRedirect("party.html");
             //RequestDispatcher rd = request.getRequestDispatcher("party.html");

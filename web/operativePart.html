@@ -32,11 +32,27 @@
         <h1>CONTRACT FORM</h1>
         <div class="containerw3layouts-agileits">
             <div class="w3layoutscontactagileits">
-                <h2>Permision</h2>
+                <h2 id="FormTittle">Operative Part</h2>
                 <div id="wrapper">
                     <form Id="OperativePart" name="OperativePart" action="DeonticStructuredClause" method="post">
                         <div id="login" class="animate w3layouts agileits form">
-
+                            <div class="ferry ferry-from">
+                                <label>OperativePart Type</label>
+                                <select name="OperativePartType">
+                                    <option value="Obligation">Obligation</option>
+                                    <option value="Permission">Permission</option>
+                                    <option value="Prohibition">Prohibition</option>
+                                    <!--<option value="Statement">Statement</option> -->
+                                </select>
+                            </div>
+                            <div class="ferry ferry-from">
+                                <label>OperativePart Id</label>
+                                <input type="text" name="OperativePartId" placeholder="Id" required="">
+                            </div>
+                            <div class="ferry ferry-from">
+                                <label>Textual Part</label>
+                                <textarea id="message" name="TextualPart" placeholder="Textual contract version" title="Enter the analogical-textual Part if exists"></textarea>
+                            </div>
                             <h3> Precondition </h3> <br>
                             <div class="ferry ferry-from">
                                 <label>Precondition Id</label>
@@ -76,6 +92,10 @@
                             </div> -->
                             <h3> Action </h3><br>
                             <div class="ferry ferry-from">
+                                <label>Action Identifier</label>
+                                <input type="text" name="ActionId" placeholder="Id" >
+                            </div>
+                            <div class="ferry ferry-from">
                                 <label>Type</label>
                                 <select name="ActionType">
                                     <option value="Donation">Donation</option>
@@ -89,17 +109,17 @@
                             <h3> Object </h3><br>
                             <div class="ferry ferry-from">
                                 <label>Type</label>
-                                <select id="ObjectType" name="type" onchange="onObjectTypeChange()">
+                                <select id="ObjectType" name="ObjectType" onchange="onObjectTypeChange()">
                                     <option value="Item">Item</option>
                                     <option value="Event">Event</option>
                                     <option value="Subject">Subject</option>
-                                    <option value="Service">Service</option>
+                                    <!-- <option value="Service">Service</option> -->
                                 </select>
                             </div>
                             <div id="variableObjectDiv" class="ferry ferry-from">
                                 <div id ="VariableContent">
                                     <label>Item Identifier</label>
-                                    <input type="text" name="ObjectIdentifier" placeholder="IdRef" required="">
+                                    <input type="text" name="ItemIdentifier" placeholder="IdRef">
                                     <label>Item Type</label>
                                     <select name="ItemType">
                                         <option value="Alignment">Alignment</option>
@@ -115,9 +135,9 @@
                             <h3> Resultant Object </h3><br>
                             <div class="ferry ferry-from">
                                 <label>Item Identifier</label>
-                                <input type="text" name="ObjectIdentifier" placeholder="IdRef" required="">
+                                <input type="text" name="ResultantObjectIdentifier" placeholder="IdRef">
                                 <label>Item Type</label>
-                                <select name="ItemType">
+                                <select name="ResultantObject">
                                     <option value="Alignment">Alignment</option>
                                     <option value="AnonymizedGenomaData">AnonymizedGenomaData</option>
                                     <option value="CompleteGenome">CompleteGenome</option>
@@ -129,7 +149,7 @@
                             </div>
                             <h3> PostCondition </h3> <br>
                             <div class="ferry ferry-from">
-                                <label>Precondition Id</label>
+                                <label>PostCondition Id</label>
                                 <input type="text" name="PostConditionId" placeholder="Id">
                             </div>
                             <div class="ferry ferry-from">
@@ -143,15 +163,16 @@
                             </div>
                             <div class="ferry ferry-from">
                                 <label>Validity</label>
-                                <input class="date agileits w3layouts" name="PostConditionValidity" id="datepicker2" type="text" value="Date" onfocus="this.value = '';" onblur="if (this.value == '') {
-                                            this.value = '';}">
+                                <input class="date agileits w3layouts" name="PostConditionValidity" id="datepicker3" type="text" value="Date" onfocus="this.value = '';" onblur="if (this.value == '') {
+                                            this.value = '';
+                                        }">
                             </div>
                             <div class="wthreesubmitaits">
-                                <input type="submit" id="SubmitButton" name="submit" value="End and Generate Contract">
                                 <input type="button" id="AddAnotherButton" value="Add another Operative Part" name="AddAnother" onClick ="addanother()"/>
+                                <input type="submit" id="SubmitButton" name="submit" value="End and Generate Contract">
                             </div>
                         </div>
-                        <input type="hidden" id="nextaction" name="nextaction" value=""> 
+                        <input type="hidden" id="NextAction" name="NextAction" value="Finish"> 
                     </form>
                 </div>
             </div>
@@ -166,10 +187,13 @@
                                     $(function () {
                                         $("#datepicker,#datepicker1,#datepicker2").datepicker();
                                     });
+                                    $(function () {
+                                        $("#datepicker,#datepicker1,#datepicker3").datepicker();
+                                    });
         </script>
         <script type="text/javascript" >
             function addanother() {
-                document.getElementById("nextaction").value = "AddAnother";
+                document.getElementById("NextAction").value = "AddAnother";
                 document.getElementById('SubmitButton').click();
             }
             function onObjectTypeChange() {

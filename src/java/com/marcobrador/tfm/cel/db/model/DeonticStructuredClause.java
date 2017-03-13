@@ -3,6 +3,7 @@ package com.marcobrador.tfm.cel.db.model;
 import com.marcobrador.tfm.cel.db.Utils;
 import com.marcobrador.tfm.cel.db.model.actions.*;
 import com.marcobrador.tfm.cel.db.model.constraints.*;
+import java.io.Serializable;
 import org.hibernate.annotations.ForceDiscriminator;
 
 import javax.persistence.*;
@@ -20,7 +21,7 @@ import java.util.*;
 @DiscriminatorColumn(name = "clause_type")
 @ForceDiscriminator
 @Table(name = "clauses")
-public abstract class DeonticStructuredClause {
+public abstract class DeonticStructuredClause implements Serializable {
 
     @Id
     @Column
@@ -37,27 +38,27 @@ public abstract class DeonticStructuredClause {
     private Set<PreCondition> preConditions;
 
     @Embedded
-    @XmlElement(name="Subject", namespace = "urn:mpeg:mpeg21:cel:core:2015")
+    @XmlElement(name = "Subject", namespace = "urn:mpeg:mpeg21:cel:core:2015")
     private Subject subject;
 
     @Embedded
-    @XmlElement(name="Act", namespace = "urn:mpeg:mpeg21:cel:core:2015")
+    @XmlElement(name = "Act", namespace = "urn:mpeg:mpeg21:cel:core:2015")
     private Act act;
 
     @Embedded
-    @XmlElement(name="Object", namespace = "urn:mpeg:mpeg21:cel:core:2015")
+    @XmlElement(name = "Object", namespace = "urn:mpeg:mpeg21:cel:core:2015")
     private CelObject celObject;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @XmlElement(name="ResultantObject", namespace = "urn:mpeg:mpeg21:cel:core:2015")
+    @XmlElement(name = "ResultantObject", namespace = "urn:mpeg:mpeg21:cel:core:2015")
     private Item resultantObject;
 
     @Embedded
-    @XmlElement(name="Constraint", namespace = "urn:mpeg:mpeg21:cel:core:2015")
+    @XmlElement(name = "Constraint", namespace = "urn:mpeg:mpeg21:cel:core:2015")
     private Constraint constraint;
 
     @Embedded
-    @XmlElement(name="Issuer", namespace = "urn:mpeg:mpeg21:cel:core:2015")
+    @XmlElement(name = "Issuer", namespace = "urn:mpeg:mpeg21:cel:core:2015")
     private Issuer issuer;
 
     @ManyToOne
@@ -112,7 +113,7 @@ public abstract class DeonticStructuredClause {
     public Contract getContract() {
         return contract;
     }
-    
+
     @Override
     public String toString() {
         String result = "id: " + id + "\n"
@@ -166,17 +167,18 @@ public abstract class DeonticStructuredClause {
     }
 
     /**
-     * Utility method for comparing constraints. If one of the two constraints is null and the other
-     * one is not, the comparison will succeed if and only if the second one has an empty list of
-     * facts.
-     * In case both are null, comparison succeeds. In case both are not null, the result of
+     * Utility method for comparing constraints. If one of the two constraints
+     * is null and the other one is not, the comparison will succeed if and only
+     * if the second one has an empty list of facts. In case both are null,
+     * comparison succeeds. In case both are not null, the result of
      * {@link com.marcobrador.tfm.cel.db.model.DeonticStructuredClause.Constraint#equals(Object)}
      * is returned.
      *
      * @param first The first parameter of the comparison.
      * @param second The second parameter of the comparison.
      *
-     * @return {@code true} if both constraints are equal, {@code false} otherwise.
+     * @return {@code true} if both constraints are equal, {@code false}
+     * otherwise.
      */
     private boolean compareConstraints(Constraint first, Constraint second) {
         if (first == null && second == null) {
@@ -191,9 +193,11 @@ public abstract class DeonticStructuredClause {
     }
 
     /**
-     * Abstract builder to be extended by the implementations of the {@link DeonticStructuredClause} class.
+     * Abstract builder to be extended by the implementations of the
+     * {@link DeonticStructuredClause} class.
      */
     public static abstract class Builder {
+
         private final String id;
         private final Subject subject;
         private final Act act;
@@ -241,7 +245,6 @@ public abstract class DeonticStructuredClause {
     }
 
     // Complex elements of DeonticStructuredClause
-
     /**
      * Class that represents the cel-core:Subject class.
      */
@@ -253,7 +256,6 @@ public abstract class DeonticStructuredClause {
         private String partyRef;
 
         // TODO: missing relationship with parties table
-
         private Subject() {
         }
 
@@ -302,7 +304,6 @@ public abstract class DeonticStructuredClause {
         private String partyRef;
 
         // TODO: missing relationship with parties table
-
         private Issuer() {
         }
 
@@ -345,34 +346,50 @@ public abstract class DeonticStructuredClause {
      */
     @Embeddable
     public static class Act {
+
         @Column(name = "act_id")
         @XmlAttribute
         private String id;
 
         @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
         @XmlElements(value = {
-                // CEL CORE actions
-                @XmlElement(name = "Consume", namespace = "urn:mpeg:mpeg21:cel:core:2015", type = Consume.class),
-                @XmlElement(name = "Match", namespace = "urn:mpeg:mpeg21:cel:core:2015", type = Match.class),
-                @XmlElement(name = "Provide", namespace = "urn:mpeg:mpeg21:cel:core:2015", type = Provide.class),
+            // CEL CORE actions
+            @XmlElement(name = "Consume", namespace = "urn:mpeg:mpeg21:cel:core:2015", type = Consume.class)
+            ,
+                @XmlElement(name = "Match", namespace = "urn:mpeg:mpeg21:cel:core:2015", type = Match.class)
+            ,
+                @XmlElement(name = "Provide", namespace = "urn:mpeg:mpeg21:cel:core:2015", type = Provide.class)
+            ,
                 // CEL IPRE actions
-                @XmlElement(name = "Distribute", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = Distribute.class),
-                @XmlElement(name = "MakeCopy", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = MakeCopy.class),
-                @XmlElement(name = "Fixate", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = Fixate.class),
-                @XmlElement(name = "CommunicationToThePublic", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = CommunicationToThePublic.class),
-                @XmlElement(name = "Transform", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = Transform.class),
-                @XmlElement(name = "CreativeTransform", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = CreativeTransform.class),
-                @XmlElement(name = "MakeExcerpt", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = MakeExcerpt.class),
+                @XmlElement(name = "Distribute", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = Distribute.class)
+            ,
+                @XmlElement(name = "MakeCopy", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = MakeCopy.class)
+            ,
+                @XmlElement(name = "Fixate", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = Fixate.class)
+            ,
+                @XmlElement(name = "CommunicationToThePublic", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = CommunicationToThePublic.class)
+            ,
+                @XmlElement(name = "Transform", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = Transform.class)
+            ,
+                @XmlElement(name = "CreativeTransform", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = CreativeTransform.class)
+            ,
+                @XmlElement(name = "MakeExcerpt", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = MakeExcerpt.class)
+            ,
                 // CEL PANE actions
-                @XmlElement(name = "Payment", namespace = "urn:mpeg:mpeg21:cel:pane:2015", type = Payment.class),
-                @XmlElement(name = "Notify", namespace = "urn:mpeg:mpeg21:cel:pane:2015", type = Notify.class),
+                @XmlElement(name = "Payment", namespace = "urn:mpeg:mpeg21:cel:pane:2015", type = Payment.class)
+            ,
+                @XmlElement(name = "Notify", namespace = "urn:mpeg:mpeg21:cel:pane:2015", type = Notify.class)
+            ,
                 // CEL RELE actions
-                @XmlElement(name = "adapt", namespace = "urn:mpeg:mpeg21:2003:01-REL-MX-NS", type = Adapt.class),
-                @XmlElement(name = "enhance", namespace = "urn:mpeg:mpeg21:2003:01-REL-MX-NS", type = Enhance.class),
-                @XmlElement(name = "issue", namespace = "urn:mpeg:mpeg21:2003:01-REL-R-NS", type = Issue.class),
+                @XmlElement(name = "adapt", namespace = "urn:mpeg:mpeg21:2003:01-REL-MX-NS", type = Adapt.class)
+            ,
+                @XmlElement(name = "enhance", namespace = "urn:mpeg:mpeg21:2003:01-REL-MX-NS", type = Enhance.class)
+            ,
+                @XmlElement(name = "issue", namespace = "urn:mpeg:mpeg21:2003:01-REL-R-NS", type = Issue.class)
+            ,
                 @XmlElement(name = "modify", namespace = "urn:mpeg:mpeg21:2003:01-REL-MX-NS", type = Modify.class)
-                // CEL GENOMIC actions HERE
-                //Here
+        // CEL GENOMIC actions HERE
+        //Here
         })
         private Action action;
 
@@ -417,7 +434,7 @@ public abstract class DeonticStructuredClause {
 
         @Override
         public String toString() {
-            return "Act: " + action + (id == null ? "" : "(id: " + id +")");
+            return "Act: " + action + (id == null ? "" : "(id: " + id + ")");
         }
 
         public String getId() {
@@ -432,9 +449,11 @@ public abstract class DeonticStructuredClause {
     public static class CelObject {
 
         @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-        @XmlElement(name="Item", namespace = "urn:mpeg:mpeg21:cel:core:2015")
+        @XmlElement(name = "Item", namespace = "urn:mpeg:mpeg21:cel:core:2015")
         private Item item;
-
+        private Event event;
+        private Issuer issuer;
+        
         private CelObject() {
             // Required by JAXB
         }
@@ -443,10 +462,34 @@ public abstract class DeonticStructuredClause {
             this.item = item;
         }
 
+        public CelObject(Event event) {
+            this.event = event;
+        }
+        
+        public CelObject(Issuer issuer) {
+            this.issuer = issuer;
+        }
+
+        public Item getItem() {
+            return item;
+        }
+
+        public Event getEvent() {
+            return event;
+        }
+        
+        public Issuer getIssuer() {
+            return issuer;
+        }
+
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || !(o instanceof CelObject)) return false;
+            if (this == o) {
+                return true;
+            }
+            if (o == null || !(o instanceof CelObject)) {
+                return false;
+            }
 
             CelObject celObject = (CelObject) o;
 
@@ -455,12 +498,16 @@ public abstract class DeonticStructuredClause {
 
         @Override
         public int hashCode() {
-            return item != null ? item.hashCode() : 0;
+            return item != null ? item.hashCode() : event != null ? event.hashCode() : 0;
         }
 
         @Override
         public String toString() {
-            return "Object{" + item + "}";
+            if (item != null) {
+                return "Object{" + item + "}";
+            } else {
+                return "Object{" + event + "}";
+            }
         }
     }
 
@@ -472,27 +519,45 @@ public abstract class DeonticStructuredClause {
 
         @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
         @XmlElements(value = {
-                // CEL CORE constraints
-                @XmlElement(name = "ActionEventRelatedFact", namespace = "urn:mpeg:mpeg21:cel:core:2015", type = ActionEventRelatedFact.class),
-                @XmlElement(name = "FactIntersection", namespace = "urn:mpeg:mpeg21:cel:core:2015", type = FactIntersection.class),
-                @XmlElement(name = "FactNegation", namespace = "urn:mpeg:mpeg21:cel:core:2015", type = FactNegation.class),
-                @XmlElement(name = "FactUnion", namespace = "urn:mpeg:mpeg21:cel:core:2015", type = FactUnion.class),
-                @XmlElement(name = "TogetherWith", namespace = "urn:mpeg:mpeg21:cel:core:2015", type = TogetherWith.class),
+            // CEL CORE constraints
+            @XmlElement(name = "ActionEventRelatedFact", namespace = "urn:mpeg:mpeg21:cel:core:2015", type = ActionEventRelatedFact.class)
+            ,
+                @XmlElement(name = "FactIntersection", namespace = "urn:mpeg:mpeg21:cel:core:2015", type = FactIntersection.class)
+            ,
+                @XmlElement(name = "FactNegation", namespace = "urn:mpeg:mpeg21:cel:core:2015", type = FactNegation.class)
+            ,
+                @XmlElement(name = "FactUnion", namespace = "urn:mpeg:mpeg21:cel:core:2015", type = FactUnion.class)
+            ,
+                @XmlElement(name = "TogetherWith", namespace = "urn:mpeg:mpeg21:cel:core:2015", type = TogetherWith.class)
+            ,
                 // CEL IPRE constraints
-                @XmlElement(name = "AccessPolicy", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = AccessPolicy.class),
-                @XmlElement(name = "DeliveryModality", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = DeliveryModality.class),
-                @XmlElement(name = "Device", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = Device.class),
-                @XmlElement(name = "Language", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = Language.class),
-                @XmlElement(name = "Length", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = Length.class),
-                @XmlElement(name = "MaterialFormat", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = MaterialFormat.class),
-                @XmlElement(name = "Means", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = Means.class),
-                @XmlElement(name = "Runs", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = Runs.class),
-                @XmlElement(name = "SpatialContext", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = SpatialContext.class),
-                @XmlElement(name = "TemporalContext", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = TemporalContext.class),
+                @XmlElement(name = "AccessPolicy", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = AccessPolicy.class)
+            ,
+                @XmlElement(name = "DeliveryModality", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = DeliveryModality.class)
+            ,
+                @XmlElement(name = "Device", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = Device.class)
+            ,
+                @XmlElement(name = "Language", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = Language.class)
+            ,
+                @XmlElement(name = "Length", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = Length.class)
+            ,
+                @XmlElement(name = "MaterialFormat", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = MaterialFormat.class)
+            ,
+                @XmlElement(name = "Means", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = Means.class)
+            ,
+                @XmlElement(name = "Runs", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = Runs.class)
+            ,
+                @XmlElement(name = "SpatialContext", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = SpatialContext.class)
+            ,
+                @XmlElement(name = "TemporalContext", namespace = "urn:mpeg:mpeg21:cel:ipre:2015", type = TemporalContext.class)
+            ,
                 // CEL RELE constraints
-                @XmlElement(name = "feePerInterval", namespace = "urn:mpeg:mpeg21:2003:01-REL-SX-NS", type = FeePerInterval.class),
-                @XmlElement(name = "validityTimeMetered", namespace = "urn:mpeg:mpeg21:2003:01-REL-SX-NS", type = ValidityTimeMetered.class),
-                @XmlElement(name = "validityTimePeriodic", namespace = "urn:mpeg:mpeg21:2003:01-REL-SX-NS", type = ValidityTimePeriodic.class),
+                @XmlElement(name = "feePerInterval", namespace = "urn:mpeg:mpeg21:2003:01-REL-SX-NS", type = FeePerInterval.class)
+            ,
+                @XmlElement(name = "validityTimeMetered", namespace = "urn:mpeg:mpeg21:2003:01-REL-SX-NS", type = ValidityTimeMetered.class)
+            ,
+                @XmlElement(name = "validityTimePeriodic", namespace = "urn:mpeg:mpeg21:2003:01-REL-SX-NS", type = ValidityTimePeriodic.class)
+            ,
                 @XmlElement(name = "validityInterval", namespace = "urn:mpeg:mpeg21:2003:01-REL-R-NS", type = ValidityInterval.class)
         })
         private Set<Fact> facts;
@@ -521,8 +586,12 @@ public abstract class DeonticStructuredClause {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
 
             Constraint that = (Constraint) o;
 

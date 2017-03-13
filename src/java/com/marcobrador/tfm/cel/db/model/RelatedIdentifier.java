@@ -1,5 +1,6 @@
 package com.marcobrador.tfm.cel.db.model;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.xml.bind.annotation.XmlValue;
@@ -8,7 +9,7 @@ import javax.xml.bind.annotation.XmlValue;
  * Class that represents the dii:RelatedIdentifier type.
  */
 @Embeddable
-public class RelatedIdentifier {
+public class RelatedIdentifier implements Serializable{
 
     @Column
     @XmlValue

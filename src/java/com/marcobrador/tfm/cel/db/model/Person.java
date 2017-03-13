@@ -1,5 +1,6 @@
 package com.marcobrador.tfm.cel.db.model;
 
+import java.io.Serializable;
 import javax.persistence.*;
 
 /**
@@ -7,7 +8,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "persons")
-public class Person extends PartyBasicGroup {
+public class Person extends PartyBasicGroup  implements Serializable{
 
     
     

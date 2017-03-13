@@ -1,5 +1,6 @@
 package com.marcobrador.tfm.cel.db.model;
 
+import java.io.Serializable;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
@@ -8,7 +9,7 @@ import javax.persistence.Entity;
  */
 @Entity
 @DiscriminatorValue("permission")
-public class Permission extends DeonticStructuredClause {
+public class Permission extends DeonticStructuredClause implements Serializable{
 
     protected Permission() {
         // Required by JAXB
@@ -27,5 +28,9 @@ public class Permission extends DeonticStructuredClause {
         public Permission build() {
             return new Permission(this);
         }
+    }
+    
+    public String getType() {
+        return "Permission";
     }
 }

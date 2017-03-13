@@ -1,5 +1,6 @@
 package com.marcobrador.tfm.cel.db.model;
 
+import java.io.Serializable;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlTransient;
@@ -10,7 +11,7 @@ import javax.xml.bind.annotation.XmlValue;
  */
 @Entity
 @Table(name = "statements")
-public class Statement {
+public class Statement  implements Serializable{
 
     @Id
     @Column

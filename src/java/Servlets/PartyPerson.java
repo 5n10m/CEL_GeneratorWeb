@@ -52,8 +52,17 @@ public class PartyPerson extends HttpServlet {
             Contract.Builder cb = (Contract.Builder)session.getAttribute("Contract");
             cb.addParty(p);
             session.setAttribute("Contract", cb);        
-            RequestDispatcher rd = request.getRequestDispatcher("operativePart.html");
-            rd.forward(request, response);
+            
+            switch (request.getParameter("NextAction")) {
+                case "AddAnother":
+                    RequestDispatcher rd = request.getRequestDispatcher("party.html");
+                    rd.forward(request, response);
+                    break;
+                case "Finish":
+                    RequestDispatcher rd2 = request.getRequestDispatcher("operativePart.html");
+                    rd2.forward(request, response);
+                    break;
+            }
         }
     }
 

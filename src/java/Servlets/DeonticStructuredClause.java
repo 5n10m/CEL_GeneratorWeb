@@ -177,7 +177,9 @@ public class DeonticStructuredClause extends HttpServlet implements Serializable
                     rd.forward(request, response);
                     break;
                 case "Finish":
-                    RequestDispatcher rd2 = request.getRequestDispatcher("OperativePart.jsp");
+                    Contract c = cb.build();
+                    out.print("<p>" + ConditionalCreator.WriteContract(c) + "</p>");
+                    RequestDispatcher rd2 = request.getRequestDispatcher("PrintContract.jsp");
                     rd2.forward(request, response);
                     break;
             }

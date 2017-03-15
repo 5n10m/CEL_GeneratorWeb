@@ -6,6 +6,7 @@
 package Servlets;
 
 
+import com.marcobrador.tfm.cel.db.model.Contract;
 import com.marcobrador.tfm.cel.db.model.Organization;
 import com.marcobrador.tfm.cel.db.model.Party;
 import com.marcobrador.tfm.cel.db.model.Person;
@@ -41,7 +42,8 @@ public class PartyOrganization extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /*PartyBasicGroup pbg = new Person.Builder(request.getParameter("name"))
+            
+            PartyBasicGroup pbg = new Person.Builder(request.getParameter("name"))
                 .setIdentifier(request.getParameter("identifier"))
                 .setDescription(request.getParameter("description"))
                 .setDetails(request.getParameter("details"))
@@ -54,11 +56,21 @@ public class PartyOrganization extends HttpServlet {
                     .build();
             Party part = new Party.Builder(request.getParameter("name"), p).setAddress(request.getParameter("oaddress")).build();
             
-            HttpSession session= request.getSession();
-            session.setAttribute("Party2", part);
-            */
-            RequestDispatcher rd = request.getRequestDispatcher("Partys.html");
-            rd.forward(request, response);
+            HttpSession session= request.getSession(true);
+            Contract.Builder cb = (Contract.Builder)session.getAttribute("Contract");
+            cb.addParty(part);
+            session.setAttribute("Contract", cb);
+            
+           switch (request.getParameter("NextAction")) {
+                case "AddAnother":
+                    RequestDispatcher rd = request.getRequestDispatcher("party.html");
+                    rd.forward(request, response);
+                    break;
+                case "Finish":
+                    RequestDispatcher rd2 = request.getRequestDispatcher("operativePartType.html");
+                    rd2.forward(request, response);
+                    break;
+            }
         }
     }
 

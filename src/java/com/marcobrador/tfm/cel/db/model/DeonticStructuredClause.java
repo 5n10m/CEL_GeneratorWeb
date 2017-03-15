@@ -440,6 +440,10 @@ public abstract class DeonticStructuredClause implements Serializable {
         public String getId() {
             return id;
         }
+        
+        public Action getAction() {
+            return action;
+        }
     }
 
     /**

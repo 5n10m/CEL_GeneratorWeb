@@ -1,3 +1,13 @@
+<%-- 
+    Document   : operativePart
+    Created on : 19-mar-2017, 18:00:20
+    Author     : david
+--%>
+
+<%@page import="com.marcobrador.tfm.cel.db.model.Party"%>
+<%@page import="com.marcobrador.tfm.cel.db.model.Contract"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <!--
         Author: W3layouts
         Author URL: http://w3layouts.com
@@ -6,7 +16,6 @@
 -->
 <!DOCTYPE html>
 <html lang="en">
-    <!-- Head -->
     <head>
         <title>Genomic CEL contract creation</title>
         <!-- Meta-Tags -->
@@ -76,7 +85,14 @@
                             <h3> Subject </h3> <br>
                             <div class="ferry ferry-from">
                                 <label>Party Reference</label>
-                                <input type="text" name="PartyRef" placeholder="IdRef" >
+                                <select name="PartyRef">
+                                    <%
+                                        Contract.Builder cb = (Contract.Builder) session.getAttribute("Contract");
+                                        for (Party p : cb.build().getParties()) {
+                                            out.println("<option value=\"" + p.getId() + "\">" + p.getId() + "</option>");
+                                        }
+                                    %>
+                                </select>
                             </div>
                             <!-- <h3> Act </h3> <br>
                             <div class="ferry ferry-from">
@@ -197,17 +213,17 @@
                 document.getElementById('SubmitButton').click();
             }
             function onObjectTypeChange() {
-                switch (document.getElementById("ObjectType").value) {
-                    case "Item":
-                        var element = document.getElementById("VariableContent");
-                        if (element != null) {
-                            element.outerHTML = "";
-                            delete element;
-                        }
-                        //document.getElementById('VariableContent').removedNode();
-                        var div = document.createElement('div');
-                        div.id = 'VariableContent';
-                        div.innerHTML = '<label>Item Identifier</label>\
+            switch (document.getElementById("ObjectType").value) {
+            case "Item":
+                    var element = document.getElementById("VariableContent");
+                    if (element != null) {
+            element.outerHTML = "";
+                    delete element;
+            }
+            //document.getElementById('VariableContent').removedNode();
+            var div = document.createElement('div');
+                    div.id = 'VariableContent';
+                    div.innerHTML = '<label>Item Identifier</label>\
                                         <input type="text" name="ItemIdentifier" placeholder="IdRef" required="">\
                                         <label>Item Type</label>\
                                         <select name="ItemType">\
@@ -219,51 +235,57 @@
                                             <option value="RegionsOfVariant">RegionsOfVariant</option>\
                                             <option value="Sequence">Sequence</option>\
                                         </select>';
-                        document.getElementById('variableObjectDiv').appendChild(div);
-                        break;
+                    document.getElementById('variableObjectDiv').appendChild(div);
+                    break;
                     case "Event":
-                        var element = document.getElementById("VariableContent");
-                        if (element != null) {
-                            element.outerHTML = "";
-                            delete element;
-                        }
-                        var div = document.createElement('div');
-                        div.id = 'VariableContent';
-                        div.innerHTML = '<label>Event Identifier</label>\
+                    var element = document.getElementById("VariableContent");
+                    if (element != null) {
+            element.outerHTML = "";
+                    delete element;
+            }
+            var div = document.createElement('div');
+                    div.id = 'VariableContent';
+                    div.innerHTML = '<label>Event Identifier</label>\
                                         <input type="text" name="EventIdentifier" placeholder="IdRef" required="">\
                                         <label>Event Type</label>\
                                         <select name="EventType">\
                                             <option value="MoreExperiments">MoreExperiments</option>\
                                         </select>';
-                        document.getElementById('variableObjectDiv').appendChild(div);
-                        break;
+                    document.getElementById('variableObjectDiv').appendChild(div);
+                    break;
                     case "Subject":
-                        var element = document.getElementById("VariableContent");
-                        if (element != null) {
-                            element.outerHTML = "";
-                            delete element;
-                        }
-                        var div = document.createElement('div');
-                        div.id = 'VariableContent';
-                        div.innerHTML = '<label>Subject Identifier</label>\
-                                        <input type="text" name="SubjectIdentifier" placeholder="IdRef" required="">';
-                        document.getElementById('variableObjectDiv').appendChild(div);
-                        break;
-                    case "Service":
-                        var element = document.getElementById("VariableContent");
-                        if (element != null) {
-                            element.outerHTML = "";
-                            delete element;
-                        }
-                        var div = document.createElement('div');
-                        div.id = 'VariableContent';
-                        div.innerHTML = '<label>PORDEFINIR</label>\
-                                        <input type="text" name="EventIdentifier" placeholder="PORDEFINIR" required="">';
-                        document.getElementById('variableObjectDiv').appendChild(div);
-                        break;
-                }
+                    var element = document.getElementById("VariableContent");
+                    if (element != null) {
+            element.outerHTML = "";
+                    delete element;
             }
-        </script>
+            var div = document.createElement('div');
+                    div.id = 'VariableContent';
+                    div.innerHTML = '<label>Subject Identifier</label>'+
+                                        '<select name="PartyRef">'+
+            <%
+                                        for (Party p : cb.build().getParties()) {
+                                            out.println("'<option value=\"" + p.getId() + "\">" + p.getId() + "</option>' +");
+                                        }
+            %>
+                                '</select>';
+                            document.getElementById('variableObjectDiv').appendChild(div);
+                            break;
+                                case "Service":
+                                var element = document.getElementById("VariableContent");
+                                if (element != null) {
+                    element.outerHTML = "";
+                    delete element;
+                            }
+                            var div = document.createElement('div');
+                                div.id = 'VariableContent';
+                                div.innerHTML = '<label>PORDEFINIR < /label>\
+                            <input type="text" name="EventIdentifier" placeholder="PORDEFINIR" required="">';
+                                document.getElementById('variableObjectDiv').appendChild(div);
+                                break;
+                                }
+                                }
+                                </script>
         <!-- //Date-Picker-JavaScript -->
         <!-- //Necessary-JavaScript-Files-&-Links -->
     </body>

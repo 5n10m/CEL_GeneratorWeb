@@ -59,7 +59,7 @@ public class PartyPerson extends HttpServlet {
                     rd.forward(request, response);
                     break;
                 case "Finish":
-                    RequestDispatcher rd2 = request.getRequestDispatcher("operativePart.html");
+                    RequestDispatcher rd2 = request.getRequestDispatcher("operativePart.jsp");
                     rd2.forward(request, response);
                     break;
             }

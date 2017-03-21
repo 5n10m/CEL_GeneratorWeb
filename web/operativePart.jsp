@@ -185,7 +185,7 @@
                             </div>-->
                             <div class="wthreesubmitaits">
                                 <input type="button" id="AddAnotherButton" value="Add another Operative Part" name="AddAnother" onClick ="addanother()"/>
-                                <input type="submit" id="SubmitButton" name="submit" value="End and Generate Contract">
+                                <input type="submit" id="SubmitButton" name="submit" value="Continue to Pre/Post Conditions">
                             </div>
                         </div>
                         <input type="hidden" id="NextAction" name="NextAction" value="Finish"> 

@@ -35,12 +35,19 @@ public class Item implements Serializable{
     @OneToOne
     private DeonticStructuredClause clause;
 
+    
+    private Region region;
+    
     public int getId() {
         return id;
     }
 
     public String getName() {
         return name;
+    }
+    
+    public Region getRegion() {
+        return region;
     }
 
     public RelatedIdentifier getRelatedIdentifier() {
@@ -87,6 +94,7 @@ public class Item implements Serializable{
     public static class Builder {
         protected String name;
         protected RelatedIdentifier relatedIdentifier;
+        private Region region;
 
         public Builder setName(String value) {
             this.name = value;
@@ -97,12 +105,58 @@ public class Item implements Serializable{
             this.relatedIdentifier = value;
             return this;
         }
+        
+        public Builder setRelatedIdentifier(Region region) {
+            this.region = region;
+            return this;
+        }
 
         public Item build() {
             if (relatedIdentifier == null) {
                 throw new IllegalStateException("relatedIdentifier cannot be null");
             }
             return new Item(this);
+        }
+    }
+    
+    public class Region {
+        private String identifier;
+        private int start;
+        private int end;
+        
+        protected Region(String identifier){
+            this.identifier = identifier;
+            
+        }
+        
+        protected Region(String identifier, int start, int end){
+            this.identifier = identifier;
+            this.start = start;
+            this.end = end;
+        }
+
+        public String getIdentifier() {
+            return identifier;
+        }
+
+        public void setIdentifier(String identifier) {
+            this.identifier = identifier;
+        }
+
+        public int getStart() {
+            return start;
+        }
+
+        public void setStart(int start) {
+            this.start = start;
+        }
+
+        public int getEnd() {
+            return end;
+        }
+
+        public void setEnd(int end) {
+            this.end = end;
         }
     }
 }

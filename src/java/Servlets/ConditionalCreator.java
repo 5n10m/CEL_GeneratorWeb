@@ -85,6 +85,12 @@ public class ConditionalCreator {
                         Core.set(p.getAddress());
                     Core.pop();
                 }
+                //ESTO NOSE SI SERIA ASÍ
+                if (p.getRol() != null){
+                    Core.add("cel-gen:Rol");
+                        Core.set(p.getRol());
+                    Core.pop();
+                }
             Core.pop();
         }
         //BODY
@@ -98,7 +104,7 @@ public class ConditionalCreator {
             for (DeonticStructuredClause d : op.getClauses()){
                 Core.push();
                 Core.add("cel-core:" + d.getClass().getSimpleName());
-                    Core.attr("id",d.getId());
+                    Core.attr("Id",d.getId());
                     /*SUBJECT*/
                     Core.push();
                     Core.add("cel-core:Subject");
@@ -124,6 +130,26 @@ public class ConditionalCreator {
                             Core.add("dii:Identifier");
                                 Core.set(i.getRelatedIdentifier());
                             Core.pop();
+                            Core.push();
+                            if(i.getRegion() != null) {
+                            Core.add("cel-gen:Region");
+                                Core.push();
+                                if(i.getRegion().getIdentifier() != null){
+                                    Core.add("Id");
+                                        Core.set(i.getRegion().getIdentifier());
+                                    Core.pop();
+                                }
+                                if(i.getRegion().getStart() > 0){
+                                    Core.add("Start");
+                                        Core.set(i.getRegion().getStart());
+                                    Core.pop();
+                                }
+                                if(i.getRegion().getEnd() > 0){
+                                    Core.add("End");
+                                        Core.set(i.getRegion().getEnd());
+                                    Core.pop();
+                                }
+                            }
                         Core.pop();
                         //break;
                        // case "Event":

@@ -36,14 +36,26 @@
             <div class="w3layoutscontactagileits">
                 <h2 id="FormTittle">Operative Part</h2>
                 <div id="wrapper">
-                    <form Id="PrePostConditions" name="PrePostConditions" action="" method="post">
+                    <form Id="PrePostConditions" name="PrePostConditions" action="PrePostConditions" method="post">
                         <div id="login" class="animate w3layouts agileits form">
+                            <h3> Target Clause </h3> <br>
+                                <div class="ferry ferry-from">
+                                <label>Precondition Id</label>
+                                <select name="PreConditionPartyRef">
+                                    <%
+                                        Contract.Builder cb = (Contract.Builder) session.getAttribute("Contract");
+                                        for (Body b : cb.build().getBody()) {
+                                            out.println("<option value=\"" + b.getOperativePart().getClauses().toString() + "\">" + b.getOperativePart().getClauses().toString() + "</option>");
+                                        }
+                                    %>
+                                </select>
+                            </div>
                             <h3> Precondition </h3> <br>
                             <div class="ferry ferry-from">
                                 <label>Precondition Id</label>
                                 <select name="PreConditionPartyRef">
                                     <%
-                                        Contract.Builder cb = (Contract.Builder) session.getAttribute("Contract");
+                                        cb = (Contract.Builder) session.getAttribute("Contract");
                                         for (Body b : cb.build().getBody()) {
                                             out.println("<option value=\"" + b.getOperativePart().getClauses().toString() + "\">" + b.getOperativePart().getClauses().toString() + "</option>");
                                         }

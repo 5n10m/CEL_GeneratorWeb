@@ -27,6 +27,10 @@ public class Party implements Serializable{
     private String id;
 
     private String rol;
+
+    public String getRol() {
+        return rol;
+    }
     
     @Column
     @XmlElement(name = "Address", namespace = "urn:mpeg:mpeg21:cel:core:2015")

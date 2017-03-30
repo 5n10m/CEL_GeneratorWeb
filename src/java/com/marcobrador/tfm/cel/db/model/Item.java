@@ -106,7 +106,7 @@ public class Item implements Serializable{
             return this;
         }
         
-        public Builder setRelatedIdentifier(Region region) {
+        public Builder setRegion(Region region) {
             this.region = region;
             return this;
         }
@@ -119,18 +119,25 @@ public class Item implements Serializable{
         }
     }
     
-    public class Region {
+    public static class Region {
         private String identifier;
+        private String regionClass;
         private int start;
         private int end;
+        
+        public Region(){
+            this.identifier = null;
+            this.regionClass = null;
+        }
         
         protected Region(String identifier){
             this.identifier = identifier;
             
         }
         
-        protected Region(String identifier, int start, int end){
+        protected Region(String identifier, String regionClass, int start, int end){
             this.identifier = identifier;
+            this.regionClass = regionClass;
             this.start = start;
             this.end = end;
         }
@@ -143,6 +150,14 @@ public class Item implements Serializable{
             this.identifier = identifier;
         }
 
+        public String getRegionClass() {
+            return regionClass;
+        }
+        
+        public void setRegionClass(String regionClass){
+            this.regionClass = regionClass;
+        }
+        
         public int getStart() {
             return start;
         }

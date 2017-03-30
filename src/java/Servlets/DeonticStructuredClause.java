@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.marcobrador.tfm.cel.db.model.*;
+import com.marcobrador.tfm.cel.db.model.Item.*;
 import com.marcobrador.tfm.cel.db.model.DeonticStructuredClause.*;
 import com.marcobrador.tfm.cel.db.model.actions.*;
 import java.io.Serializable;
@@ -65,62 +66,75 @@ public class DeonticStructuredClause extends HttpServlet implements Serializable
                     a = new View(); // para evitar el warning/error
                     break;
             }
-            Act act = new Act(request.getParameter("ActionId"), a);
+            Act act = new Act(CleanInvalid(request.getParameter("ActionId")), a);
             Subject s = new Subject(request.getParameter("PartyRef"));
-            String op_id = request.getParameter("OperativePartId");
+            String op_id = CleanInvalid(request.getParameter("OperativePartId"));
 
             switch (request.getParameter("ObjectType")) {
                 case "Event":
                     switch (request.getParameter("OperativePartType")) {
                         case "Obligation":
                             Obligation.Builder Odscb = new Obligation.Builder(op_id, s, act);
-                            Odscb.setObject(new CelObject(new Event.Builder().setName(request.getParameter("EventType")).setRelatedIdentifier(new RelatedIdentifier(request.getParameter("EventIdentifier"))).build()));
-                            if (request.getParameter("ResultantObjectIdentifier").length() > 0) {
-                                Odscb.setResultantObject(new Item.Builder().setName(request.getParameter("ResultantObject")).setRelatedIdentifier(new RelatedIdentifier(request.getParameter("ResultantObjectIdentifier"))).build());
+                            Odscb.setObject(new CelObject(new Event.Builder().setName(request.getParameter("EventType")).setRelatedIdentifier(new RelatedIdentifier(CleanInvalid(request.getParameter("EventIdentifier")))).build()));
+                            if (CleanInvalid(request.getParameter("ResultantObjectIdentifier")).length() > 0) {
+                                Odscb.setResultantObject(new Item.Builder().setName(CleanInvalid(request.getParameter("ResultantObject"))).setRelatedIdentifier(new RelatedIdentifier(CleanInvalid(request.getParameter("ResultantObjectIdentifier")))).build());
                             }
                             opb.addClause(Odscb.build());
                             break;
                         case "Permission":
                             Permission.Builder Pedscb = new Permission.Builder(op_id, s, act);
-                            Pedscb.setObject(new CelObject(new Event.Builder().setName(request.getParameter("EventType")).setRelatedIdentifier(new RelatedIdentifier(request.getParameter("EventIdentifier"))).build()));
-                            if (request.getParameter("ResultantObjectIdentifier").length() > 0) {
-                                Pedscb.setResultantObject(new Item.Builder().setName(request.getParameter("ResultantObject")).setRelatedIdentifier(new RelatedIdentifier(request.getParameter("ResultantObjectIdentifier"))).build());
+                            Pedscb.setObject(new CelObject(new Event.Builder().setName(request.getParameter("EventType")).setRelatedIdentifier(new RelatedIdentifier(CleanInvalid(request.getParameter("EventIdentifier")))).build()));
+                            if (CleanInvalid(request.getParameter("ResultantObjectIdentifier")).length() > 0) {
+                                Pedscb.setResultantObject(new Item.Builder().setName(CleanInvalid(request.getParameter("ResultantObject"))).setRelatedIdentifier(new RelatedIdentifier(CleanInvalid(request.getParameter("ResultantObjectIdentifier")))).build());
                             }
                             opb.addClause(Pedscb.build());
                             break;
                         case "Prohibition":
                             Prohibition.Builder Prodscb = new Prohibition.Builder(op_id, s, act);
-                            Prodscb.setObject(new CelObject(new Event.Builder().setName(request.getParameter("EventType")).setRelatedIdentifier(new RelatedIdentifier(request.getParameter("EventIdentifier"))).build()));
-                            if (request.getParameter("ResultantObjectIdentifier").length() > 0) {
-                                Prodscb.setResultantObject(new Item.Builder().setName(request.getParameter("ResultantObject")).setRelatedIdentifier(new RelatedIdentifier(request.getParameter("ResultantObjectIdentifier"))).build());
+                            Prodscb.setObject(new CelObject(new Event.Builder().setName(request.getParameter("EventType")).setRelatedIdentifier(new RelatedIdentifier(CleanInvalid(request.getParameter("EventIdentifier")))).build()));
+                            if (CleanInvalid(request.getParameter("ResultantObjectIdentifier")).length() > 0) {
+                                Prodscb.setResultantObject(new Item.Builder().setName(CleanInvalid(request.getParameter("ResultantObject"))).setRelatedIdentifier(new RelatedIdentifier(CleanInvalid(request.getParameter("ResultantObjectIdentifier")))).build());
                             }
                             opb.addClause(Prodscb.build());
                             break;
                     }
                     break;
                 case "Item":
+                    Item.Region r = new Region();
+                    if (CleanInvalid(request.getParameter("RegionId")).length() > 0) {
+                        r.setIdentifier(CleanInvalid(request.getParameter("RegionId")));
+                    }
+                    if (CleanInvalid(request.getParameter("RegionClass")).length() > 0) {
+                        r.setRegionClass(CleanInvalid(request.getParameter("RegionClass")));
+                    }
+                    if (CleanInvalid(request.getParameter("RegionStart")).length() > 0) {
+                        r.setStart(Integer.parseInt(CleanInvalid(request.getParameter("RegionStart"))));
+                    }
+                    if (CleanInvalid(request.getParameter("RegionEnd")).length() > 0) {
+                        r.setEnd(Integer.parseInt(CleanInvalid(request.getParameter("RegionEnd"))));
+                    }
                     switch (request.getParameter("OperativePartType")) {
                         case "Obligation":
                             Obligation.Builder Odscb = new Obligation.Builder(op_id, s, act);
-                            Odscb.setObject(new CelObject(new Item.Builder().setName(request.getParameter("ItemType")).setRelatedIdentifier(new RelatedIdentifier(request.getParameter("ItemIdentifier"))).build()));
-                            if (request.getParameter("ResultantObjectIdentifier").length() > 0) {
-                                Odscb.setResultantObject(new Item.Builder().setName(request.getParameter("ResultantObject")).setRelatedIdentifier(new RelatedIdentifier(request.getParameter("ResultantObjectIdentifier"))).build());
+                            Odscb.setObject(new CelObject(new Item.Builder().setName(request.getParameter("ItemType")).setRelatedIdentifier(new RelatedIdentifier(CleanInvalid(request.getParameter("ItemIdentifier")))).setRegion(r).build()));
+                            if (CleanInvalid(request.getParameter("ResultantObjectIdentifier")).length() > 0) {
+                                Odscb.setResultantObject(new Item.Builder().setName(CleanInvalid(request.getParameter("ResultantObject"))).setRelatedIdentifier(new RelatedIdentifier(CleanInvalid(request.getParameter("ResultantObjectIdentifier")))).build());
                             }
                             opb.addClause(Odscb.build());
                             break;
                         case "Permission":
                             Permission.Builder Pedscb = new Permission.Builder(op_id, s, act);
-                            Pedscb.setObject(new CelObject(new Item.Builder().setName(request.getParameter("ItemType")).setRelatedIdentifier(new RelatedIdentifier(request.getParameter("ItemIdentifier"))).build()));
-                            if (request.getParameter("ResultantObjectIdentifier").length() > 0) {
-                                Pedscb.setResultantObject(new Item.Builder().setName(request.getParameter("ResultantObject")).setRelatedIdentifier(new RelatedIdentifier(request.getParameter("ResultantObjectIdentifier"))).build());
+                            Pedscb.setObject(new CelObject(new Item.Builder().setName(request.getParameter("ItemType")).setRelatedIdentifier(new RelatedIdentifier(CleanInvalid(request.getParameter("ItemIdentifier")))).setRegion(r).build()));
+                            if (CleanInvalid(request.getParameter("ResultantObjectIdentifier")).length() > 0) {
+                                Pedscb.setResultantObject(new Item.Builder().setName(CleanInvalid(request.getParameter("ResultantObject"))).setRelatedIdentifier(new RelatedIdentifier(CleanInvalid(request.getParameter("ResultantObjectIdentifier")))).build());
                             }
                             opb.addClause(Pedscb.build());
                             break;
                         case "Prohibition":
                             Prohibition.Builder Prodscb = new Prohibition.Builder(op_id, s, act);
-                            Prodscb.setObject(new CelObject(new Item.Builder().setName(request.getParameter("ItemType")).setRelatedIdentifier(new RelatedIdentifier(request.getParameter("ItemIdentifier"))).build()));
-                            if (request.getParameter("ResultantObjectIdentifier").length() > 0) {
-                                Prodscb.setResultantObject(new Item.Builder().setName(request.getParameter("ResultantObject")).setRelatedIdentifier(new RelatedIdentifier(request.getParameter("ResultantObjectIdentifier"))).build());
+                            Prodscb.setObject(new CelObject(new Item.Builder().setName(request.getParameter("ItemType")).setRelatedIdentifier(new RelatedIdentifier(CleanInvalid(request.getParameter("ItemIdentifier")))).setRegion(r).build()));
+                            if (CleanInvalid(request.getParameter("ResultantObjectIdentifier")).length() > 0) {
+                                Prodscb.setResultantObject(new Item.Builder().setName(CleanInvalid(request.getParameter("ResultantObject"))).setRelatedIdentifier(new RelatedIdentifier(CleanInvalid(request.getParameter("ResultantObjectIdentifier")))).build());
                             }
                             opb.addClause(Prodscb.build());
                             break;
@@ -131,24 +145,24 @@ public class DeonticStructuredClause extends HttpServlet implements Serializable
                         case "Obligation":
                             Obligation.Builder Odscb = new Obligation.Builder(op_id, s, act);
                             Odscb.setObject(new CelObject(new Issuer(request.getParameter("SubjectIdentifier"))));
-                            if (request.getParameter("ResultantObjectIdentifier").length() > 0) {
-                                Odscb.setResultantObject(new Item.Builder().setName(request.getParameter("ResultantObject")).setRelatedIdentifier(new RelatedIdentifier(request.getParameter("ResultantObjectIdentifier"))).build());
+                            if (CleanInvalid(request.getParameter("ResultantObjectIdentifier")).length() > 0) {
+                                Odscb.setResultantObject(new Item.Builder().setName(CleanInvalid(request.getParameter("ResultantObject"))).setRelatedIdentifier(new RelatedIdentifier(CleanInvalid(request.getParameter("ResultantObjectIdentifier")))).build());
                             }
                             opb.addClause(Odscb.build());
                             break;
                         case "Permission":
                             Permission.Builder Pedscb = new Permission.Builder(op_id, s, act);
                             Pedscb.setObject(new CelObject(new Issuer(request.getParameter("SubjectIdentifier"))));
-                            if (request.getParameter("ResultantObjectIdentifier").length() > 0) {
-                                Pedscb.setResultantObject(new Item.Builder().setName(request.getParameter("ResultantObject")).setRelatedIdentifier(new RelatedIdentifier(request.getParameter("ResultantObjectIdentifier"))).build());
+                            if (CleanInvalid(request.getParameter("ResultantObjectIdentifier")).length() > 0) {
+                                Pedscb.setResultantObject(new Item.Builder().setName(CleanInvalid(request.getParameter("ResultantObject"))).setRelatedIdentifier(new RelatedIdentifier(CleanInvalid(request.getParameter("ResultantObjectIdentifier")))).build());
                             }
                             opb.addClause(Pedscb.build());
                             break;
                         case "Prohibition":
                             Prohibition.Builder Prodscb = new Prohibition.Builder(op_id, s, act);
                             Prodscb.setObject(new CelObject(new Issuer(request.getParameter("SubjectIdentifier"))));
-                            if (request.getParameter("ResultantObjectIdentifier").length() > 0) {
-                                Prodscb.setResultantObject(new Item.Builder().setName(request.getParameter("ResultantObject")).setRelatedIdentifier(new RelatedIdentifier(request.getParameter("ResultantObjectIdentifier"))).build());
+                            if (CleanInvalid(request.getParameter("ResultantObjectIdentifier")).length() > 0) {
+                                Prodscb.setResultantObject(new Item.Builder().setName(CleanInvalid(request.getParameter("ResultantObject"))).setRelatedIdentifier(new RelatedIdentifier(CleanInvalid(request.getParameter("ResultantObjectIdentifier")))).build());
                             }
                             opb.addClause(Prodscb.build());
                             break;
@@ -159,27 +173,27 @@ public class DeonticStructuredClause extends HttpServlet implements Serializable
                     break;
             }
 ///////////////////////////////////////////////////////
-            if (request.getParameter("TextualPart").length() > 0) {
-                opb.addStatement(new Statement(request.getParameter("OperativePartId"), request.getParameter("TextualPart")));
+            if (CleanInvalid(request.getParameter("TextualPart")).length() > 0) {
+                opb.addStatement(new Statement(CleanInvalid(request.getParameter("OperativePartId")), CleanInvalid(request.getParameter("TextualPart"))));
             }
-            
+
             Body b = new Body(opb.build());
-            
-            HttpSession session= request.getSession(true);
-            Contract.Builder cb = (Contract.Builder)session.getAttribute("Contract");
+
+            HttpSession session = request.getSession(true);
+            Contract.Builder cb = (Contract.Builder) session.getAttribute("Contract");
             cb.addBody(b);
-            session.setAttribute("Contract", cb);  
-                    
-                    
+            session.setAttribute("Contract", cb);
+
             switch (request.getParameter("NextAction")) {
                 case "AddAnother":
                     RequestDispatcher rd = request.getRequestDispatcher("operativePartType.html");
                     rd.forward(request, response);
                     break;
                 case "Finish":
-                    Contract c = cb.build();
-                    out.print("<p>" + ConditionalCreator.WriteContract(c) + "</p>");
-                    RequestDispatcher rd2 = request.getRequestDispatcher("PrintContract.jsp");
+                    //Contract c = cb.build();
+                    //out.print("<p>" + ConditionalCreator.WriteContract(c) + "</p>");
+                    //RequestDispatcher rd2 = request.getRequestDispatcher("PrintContract.jsp");
+                    RequestDispatcher rd2 = request.getRequestDispatcher("prePostConditions.jsp");                    
                     rd2.forward(request, response);
                     break;
             }
@@ -187,7 +201,9 @@ public class DeonticStructuredClause extends HttpServlet implements Serializable
             e.getMessage();
         }
     }
-
+    protected String CleanInvalid(String s){
+        return s.replace(" ","").replace("<","").replace(">","").replace("&","").replace("'","");
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

@@ -5,7 +5,6 @@ package Servlets;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import com.marcobrador.tfm.cel.db.model.Body;
 import com.marcobrador.tfm.cel.db.model.Contract;
 import java.io.IOException;
@@ -38,28 +37,37 @@ public class Core extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        
+
         try (PrintWriter out = response.getWriter()) {
             //https://www.youtube.com/watch?v=g1Hzy3nEH18
-            HttpSession session= request.getSession(true);
+            HttpSession session = request.getSession(true);
             session.invalidate();
             session = request.getSession();
             //Body b = new Body();
-            Contract.Builder cb =new Contract.Builder(request.getParameter("contractId"));
-            if (request.getParameter("governingLaw").length() > 0) cb.setGoverningLaw(request.getParameter("governingLaw"));
-            if (request.getParameter("court").length() > 0) cb.setCourt(request.getParameter("court"));
-            if (request.getParameter("textVersion").length() > 0) cb.setTextVersion(request.getParameter("textVersion"));
+            Contract.Builder cb = new Contract.Builder(CleanInvalid(request.getParameter("contractId")));
+            if (CleanInvalid(request.getParameter("governingLaw")).length() > 0) {
+                cb.setGoverningLaw(CleanInvalid(request.getParameter("governingLaw")));
+            }
+            if (CleanInvalid(request.getParameter("court")).length() > 0) {
+                cb.setCourt(CleanInvalid(request.getParameter("court")));
+            }
+            if (CleanInvalid(request.getParameter("textVersion")).length() > 0) {
+                cb.setTextVersion(CleanInvalid(request.getParameter("textVersion")));
+            }
             session.setAttribute("Contract", cb);
             /*session.setAttribute("contractId", (String) request.getParameter("contractId"));
             session.setAttribute("governingLaw", (String) request.getParameter("governingLaw"));
             session.setAttribute("court", (String) request.getParameter("court"));
             session.setAttribute("textVersion", (String) request.getParameter("textVersion"));*/
-            
+
             response.sendRedirect("party.html");
             //RequestDispatcher rd = request.getRequestDispatcher("party.html");
             //rd.forward(request, response);
         }
+    }
+    
+    protected String CleanInvalid(String s){
+        return s.replace(" ","").replace("<","").replace(">","").replace("&","").replace("'","");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

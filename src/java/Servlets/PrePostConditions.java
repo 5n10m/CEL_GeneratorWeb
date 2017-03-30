@@ -5,13 +5,17 @@
  */
 package Servlets;
 
+import com.marcobrador.tfm.cel.db.model.Contract;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -34,15 +38,12 @@ public class PrePostConditions extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet PrePostConditions</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet PrePostConditions at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+             HttpSession session = request.getSession(true);
+            Contract.Builder cb = (Contract.Builder) session.getAttribute("Contract");
+            Contract c = cb.build();
+            ConditionalCreator.WriteContract(c);
+        } catch (Exception ex) {
+            Logger.getLogger(PrePostConditions.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -43,11 +43,11 @@ public class PartyPerson extends HttpServlet {
         try (PrintWriter out = response.getWriter()) { 
             
             PartyBasicGroup pbg = new Person.Builder(CleanInvalid(request.getParameter("name")))
-                .setIdentifier(CleanInvalid(request.getParameter("identifier")))
+                .setIdentifier(CleanInvalid(request.getParameter("identifier").replace(" ","_")))
                 .setDescription(CleanInvalid(request.getParameter("description")))
                 .setDetails(CleanInvalid(request.getParameter("details")))
                 .build();
-            Party p = new Party.Builder(CleanInvalid(request.getParameter("identifier")), pbg).setAddress(CleanInvalid(request.getParameter("address"))).setRol(CleanInvalid(request.getParameter("Rol"))).build();
+            Party p = new Party.Builder(CleanInvalid(request.getParameter("identifier").replace(" ","_")), pbg).setAddress(CleanInvalid(request.getParameter("address"))).setRol(CleanInvalid(request.getParameter("Rol"))).build();
             HttpSession session= request.getSession(true);
             Contract.Builder cb = (Contract.Builder)session.getAttribute("Contract");
             cb.addParty(p);
@@ -67,7 +67,7 @@ public class PartyPerson extends HttpServlet {
     }
     
     protected String CleanInvalid(String s){
-        return s.replace(" ","").replace("<","").replace(">","").replace("&","").replace("'","");
+        return s.replace("<","").replace(">","").replace("&","").replace("'","");
     }
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

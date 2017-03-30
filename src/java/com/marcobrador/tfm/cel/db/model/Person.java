@@ -1,7 +1,9 @@
 package com.marcobrador.tfm.cel.db.model;
 
+
 import java.io.Serializable;
 import javax.persistence.*;
+
 
 /**
  * Class that represents the cel-core:Person complex-type.

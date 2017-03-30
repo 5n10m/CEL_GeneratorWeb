@@ -53,7 +53,14 @@ public class PartyOrganization extends HttpServlet {
                     .setIdentifier("oidentifier")
                     .setDetails("odetails")
                     .build();
-            Party part = new Party.Builder(CleanInvalid(request.getParameter("oidentifier").replace(" ", "_")), p).setAddress(CleanInvalid(request.getParameter("oaddress"))).build();
+            /*PartyBasicGroup.Builder ob = new Organization.Builder(request.getParameter("oname"));
+                    //ob.setSignatory(pbg);
+                    ob.setDescription(CleanInvalid(request.getParameter("odescription")));
+                    ob.setIdentifier("oidentifier");
+                    ob.setDetails("odetails");
+            PartyBasicGroup p = ob.build();*/
+            
+            Party part = new Party.Builder(CleanInvalid(request.getParameter("oidentifier").replace(" ", "_")), p).setRol(request.getParameter("Rol")).setAddress(CleanInvalid(request.getParameter("oaddress"))).build();
 
             HttpSession session = request.getSession(true);
             Contract.Builder cb = (Contract.Builder) session.getAttribute("Contract");
@@ -66,15 +73,18 @@ public class PartyOrganization extends HttpServlet {
                     rd.forward(request, response);
                     break;
                 case "Finish":
-                    RequestDispatcher rd2 = request.getRequestDispatcher("operativePartType.html");
+                    RequestDispatcher rd2 = request.getRequestDispatcher("operativePart.jsp");
                     rd2.forward(request, response);
                     break;
             }
         }
+        catch (Exception e){
+            e.getMessage();
+        }
     }
 
     protected String CleanInvalid(String s) {
-        return s.replace(" ", "").replace("<", "").replace(">", "").replace("&", "").replace("'", "");
+        return s.replace("<", "").replace(">", "").replace("&", "").replace("'", "");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

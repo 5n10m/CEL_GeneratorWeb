@@ -3,6 +3,7 @@
     Created on : 20-mar-2017, 1:01:43
     Author     : david
 --%>
+<%@page import="com.marcobrador.tfm.cel.db.model.DeonticStructuredClause"%>
 <%@page import="com.marcobrador.tfm.cel.db.model.Body"%>
 <%@page import="com.marcobrador.tfm.cel.db.model.Contract"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -14,7 +15,6 @@
         <!-- Meta-Tags -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <meta name="keywords" content="Hotel Booking Enquiry Form Widget Responsive, Login Form Web Template, Flat Pricing Tables, Flat Drop-Downs, Sign-Up Web Templates, Flat Web Templates, Login Sign-up Responsive Web Template, Smartphone Compatible Web Template, Free Web Designs for Nokia, Samsung, LG, Sony Ericsson, Motorola Web Design" />
         <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
         <!-- //Meta-Tags -->
         <!-- Custom-Style-Sheet -->
@@ -45,7 +45,9 @@
                                     <%
                                         Contract.Builder cb = (Contract.Builder) session.getAttribute("Contract");
                                         for (Body b : cb.build().getBody()) {
-                                            out.println("<option value=\"" + b.getOperativePart().getClauses().toString() + "\">" + b.getOperativePart().getClauses().toString() + "</option>");
+                                            for(DeonticStructuredClause d : b.getOperativePart().getClauses()){
+                                            out.println("<option value=\"" + d.getId().toString() + "\">" + d.getId().toString() + "</option>");
+                                            }
                                         }
                                     %>
                                 </select>

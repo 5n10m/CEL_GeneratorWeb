@@ -44,7 +44,7 @@ public class Core extends HttpServlet {
             session.invalidate();
             session = request.getSession();
             //Body b = new Body();
-            Contract.Builder cb = new Contract.Builder(CleanInvalid(request.getParameter("contractId")));
+            Contract.Builder cb = new Contract.Builder(CleanInvalid(request.getParameter("contractId").replace(" ", "_")));
             if (CleanInvalid(request.getParameter("governingLaw")).length() > 0) {
                 cb.setGoverningLaw(CleanInvalid(request.getParameter("governingLaw")));
             }
@@ -67,7 +67,7 @@ public class Core extends HttpServlet {
     }
     
     protected String CleanInvalid(String s){
-        return s.replace(" ","").replace("<","").replace(">","").replace("&","").replace("'","");
+        return s.replace("<","").replace(">","").replace("&","").replace("'","");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

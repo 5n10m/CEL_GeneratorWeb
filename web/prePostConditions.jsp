@@ -39,14 +39,14 @@
                     <form Id="PrePostConditions" name="PrePostConditions" action="PrePostConditions" method="post">
                         <div id="login" class="animate w3layouts agileits form">
                             <h3> Target Clause </h3> <br>
-                                <div class="ferry ferry-from">
+                            <div class="ferry ferry-from">
                                 <label>Precondition Id</label>
                                 <select name="PreConditionPartyRef">
                                     <%
                                         Contract.Builder cb = (Contract.Builder) session.getAttribute("Contract");
                                         for (Body b : cb.build().getBody()) {
-                                            for(DeonticStructuredClause d : b.getOperativePart().getClauses()){
-                                            out.println("<option value=\"" + d.getId().toString() + "\">" + d.getId().toString() + "</option>");
+                                            for (DeonticStructuredClause d : b.getOperativePart().getClauses()) {
+                                                out.println("<option value=\"" + d.getId().toString() + "\">" + d.getId().toString() + "</option>");
                                             }
                                         }
                                     %>
@@ -59,7 +59,9 @@
                                     <%
                                         cb = (Contract.Builder) session.getAttribute("Contract");
                                         for (Body b : cb.build().getBody()) {
-                                            out.println("<option value=\"" + b.getOperativePart().getClauses().toString() + "\">" + b.getOperativePart().getClauses().toString() + "</option>");
+                                            for (DeonticStructuredClause d : b.getOperativePart().getClauses()) {
+                                                out.println("<option value=\"" + d.getId().toString() + "\">" + d.getId().toString() + "</option>");
+                                            }
                                         }
                                     %>
                                 </select>
@@ -86,7 +88,9 @@
                                     <%
                                         cb = (Contract.Builder) session.getAttribute("Contract");
                                         for (Body b : cb.build().getBody()) {
-                                            out.println("<option value=\"" + b.getOperativePart().getClauses().toString() + "\">" + b.getOperativePart().getClauses().toString() + "</option>");
+                                            for (DeonticStructuredClause d : b.getOperativePart().getClauses()) {
+                                                out.println("<option value=\"" + d.getId().toString() + "\">" + d.getId().toString() + "</option>");
+                                            }
                                         }
                                     %>
                                 </select>

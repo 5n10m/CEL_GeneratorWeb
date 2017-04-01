@@ -279,7 +279,7 @@
                         var div = document.createElement('div');
                         div.id = 'VariableContent';
                         div.innerHTML = '<label>Subject Identifier</label>' +
-                                '<select name="PartyRef">' +
+                                '<select name="SubjectIdentifier">' +
             <%
                 for (Party p : cb.build().getParties()) {
                     out.println("'<option value=\"" + p.getId() + "\">" + p.getId() + "</option>' +");

@@ -10,6 +10,9 @@ package Servlets;
  *
  * @author david
  */
+import java.io.File;
+import java.io.FileWriter;
+import javax.servlet.ServletContext;
 import com.marcobrador.tfm.cel.db.model.*;
 import com.marcobrador.tfm.cel.db.model.DeonticStructuredClause;
 import org.xembly.Directives;
@@ -28,8 +31,8 @@ public class ConditionalCreator {
         
         
         Core.attr("contractId", c.getContractId());
-        Core.push();
         if(c.getTextVersion() != null){
+            Core.push();
             Core.add("cel-core:TextVersion");
                 Core.set(c.getTextVersion());
             Core.pop();
@@ -79,14 +82,15 @@ public class ConditionalCreator {
                         //ADD SIGNATORY
                     Core.pop();
                 }
-                Core.push();
                 if (p.getAddress() != null){
+                    Core.push();
                     Core.add("dc:Address");
                         Core.set(p.getAddress());
                     Core.pop();
                 }
                 //ESTO NOSE SI SERIA ASÍ
                 if (p.getRol() != null){
+                    Core.push();
                     Core.add("cel-gen:Rol");
                         Core.set(p.getRol());
                     Core.pop();
@@ -125,38 +129,45 @@ public class ConditionalCreator {
                     //switch(o.getClass().getSimpleName()){
                         //case "Item":
                         Item i = o.getItem();
+                        Core.push();
                         Core.add("cel-core:Item");
                             Core.attr("name",i.getName());
+                            Core.push();
                             Core.add("dii:Identifier");
                                 Core.set(i.getRelatedIdentifier());
                             Core.pop();
-                            Core.push();
                             if(i.getRegion() != null) {
-                            Core.add("cel-gen:Region");
                                 Core.push();
-                                if(i.getRegion().getIdentifier() != null){
-                                    Core.add("Id");
-                                        Core.set(i.getRegion().getIdentifier());
-                                    Core.pop();
-                                }
-                                if(i.getRegion().getStart() > 0){
-                                    Core.add("Start");
-                                        Core.set(i.getRegion().getStart());
-                                    Core.pop();
-                                }
-                                if(i.getRegion().getEnd() > 0){
-                                    Core.add("End");
-                                        Core.set(i.getRegion().getEnd());
-                                    Core.pop();
-                                }
+                                Core.add("cel-gen:Region");                                    
+                                    if(i.getRegion().getIdentifier() != null){
+                                        Core.push();
+                                        Core.add("Id");
+                                            Core.set(i.getRegion().getIdentifier());
+                                        Core.pop();
+                                    }
+                                    if(i.getRegion().getStart() > 0){
+                                        Core.push();
+                                        Core.add("Start");
+                                            Core.set(i.getRegion().getStart());
+                                        Core.pop();
+                                    }
+                                    if(i.getRegion().getEnd() > 0){
+                                        Core.push();
+                                        Core.add("End");
+                                            Core.set(i.getRegion().getEnd());
+                                        Core.pop();
+                                    }
+                                Core.pop();
                             }
                         Core.pop();
                         //break;
                        // case "Event":
                     } else if(o.getEvent() != null){
                         Event e = o.getEvent();
+                        Core.push();
                         Core.add("cel-core:Item");
                             Core.attr("name",e.getName());
+                            Core.push();
                             Core.add("dii:Identifier");
                                 Core.set(e.getRelatedIdentifier());
                             Core.pop();
@@ -181,7 +192,13 @@ public class ConditionalCreator {
             Core.pop();
         Core.pop();    
         }
-        System.out.println(new Xembler(Core).xml());
+        File outputFile = new File("./TheFile.xml");
+        FileWriter fout = new FileWriter(outputFile);
+        fout.write(new Xembler(Core).xml());
+        fout.close();
+        System.out.println(outputFile.getAbsolutePath());
+        System.out.print(new Xembler(Core).xml());
+        
         return new Xembler(Core).xml();
     }
 }

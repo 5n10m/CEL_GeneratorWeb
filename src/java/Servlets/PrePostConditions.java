@@ -7,6 +7,7 @@ package Servlets;
 
 import com.marcobrador.tfm.cel.db.model.Contract;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,10 +39,17 @@ public class PrePostConditions extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-             HttpSession session = request.getSession(true);
+            HttpSession session = request.getSession(true);
             Contract.Builder cb = (Contract.Builder) session.getAttribute("Contract");
             Contract c = cb.build();
-            ConditionalCreator.WriteContract(c);
+            
+            response.setContentType("text/xml");
+            response.setHeader("Content-Disposition", "attachment; filename=\"Contract.xml\"");
+            OutputStream outputStream = response.getOutputStream();
+            String outputResult = ConditionalCreator.WriteContract(c);
+            outputStream.write(outputResult.getBytes());
+            outputStream.flush();
+            outputStream.close();
         } catch (Exception ex) {
             Logger.getLogger(PrePostConditions.class.getName()).log(Level.SEVERE, null, ex);
         }

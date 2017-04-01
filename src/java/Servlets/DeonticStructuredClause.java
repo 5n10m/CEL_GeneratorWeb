@@ -186,7 +186,7 @@ public class DeonticStructuredClause extends HttpServlet implements Serializable
 
             switch (request.getParameter("NextAction")) {
                 case "AddAnother":
-                    RequestDispatcher rd = request.getRequestDispatcher("operativePartType.html");
+                    RequestDispatcher rd = request.getRequestDispatcher("operativePart.jsp");
                     rd.forward(request, response);
                     break;
                 case "Finish":

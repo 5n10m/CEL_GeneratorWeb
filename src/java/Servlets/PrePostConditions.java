@@ -6,6 +6,8 @@
 package Servlets;
 
 import com.marcobrador.tfm.cel.db.model.Contract;
+import com.marcobrador.tfm.cel.db.model.PreCondition;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -38,18 +40,43 @@ public class PrePostConditions extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+            
+            if (request.getParameter("TargetRef").length() > 0){
+                if (request.getParameter("PreConditionPartyRef").length() > 0){
+                    
+                    PreCondition.ActionStatus as;
+                    as.ActionStarted = "a";
+                    
+                    PreCondition preC = new PreCondition();
+                }
+                if (request.getParameter("PostConditionPartyRef").length() > 0){
+                    
+                }
+            }
+            
+            /* COMO DESCARGAR EL ARCHIVO */
             HttpSession session = request.getSession(true);
             Contract.Builder cb = (Contract.Builder) session.getAttribute("Contract");
             Contract c = cb.build();
-            
-            response.setContentType("text/xml");
-            response.setHeader("Content-Disposition", "attachment; filename=\"Contract.xml\"");
-            OutputStream outputStream = response.getOutputStream();
-            String outputResult = ConditionalCreator.WriteContract(c);
+            //response.sendRedirect(ConditionalCreator.WriteContract(c));
+            //response.setContentType("text/xml");
+            //response.setHeader("Content-Disposition", "attachment; filename=\"Contract.xml\"");
+            //OutputStream outputStream = response.getOutputStream();
+            /*String outputResult = ConditionalCreator.WriteContract(c);
             outputStream.write(outputResult.getBytes());
             outputStream.flush();
-            outputStream.close();
+            outputStream.close();*/
+
+            /*OutputStream outputStream = response.getOutputStream();
+            FileInputStream in = new FileInputStream(ConditionalCreator.WriteContract(c));
+            byte[] buffer = new byte[4096];
+            int length;
+            while ((length = in.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, length);
+            }
+            in.close();
+            out.flush();*/
+
         } catch (Exception ex) {
             Logger.getLogger(PrePostConditions.class.getName()).log(Level.SEVERE, null, ex);
         }

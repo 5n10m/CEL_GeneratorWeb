@@ -192,13 +192,13 @@ public class ConditionalCreator {
             Core.pop();
         Core.pop();    
         }
-        File outputFile = new File("./TheFile.xml");
+        File outputFile = new File("/TheFile.xml");
         FileWriter fout = new FileWriter(outputFile);
         fout.write(new Xembler(Core).xml());
         fout.close();
         System.out.println(outputFile.getAbsolutePath());
         System.out.print(new Xembler(Core).xml());
         
-        return new Xembler(Core).xml();
+        return outputFile.getAbsolutePath();
     }
 }

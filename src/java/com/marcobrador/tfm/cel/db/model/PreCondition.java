@@ -12,15 +12,13 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "pre_conditions")
 public class PreCondition implements Serializable{
 
-    enum ActionStatus {
+    @Id
+    private Long id;
+
+    public enum ActionStatus {
         ActionStarted,
         ActionDone
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @XmlTransient
-    private int id;
 
     @Column
     @XmlAttribute
@@ -31,7 +29,9 @@ public class PreCondition implements Serializable{
     private ActionStatus actionStatus;
 
     @ManyToOne
-    private DeonticStructuredClause clause;
+    private String withDelay;
+    
+    private String validity;
 
     @Override
     public boolean equals(Object o) {
@@ -60,11 +60,53 @@ public class PreCondition implements Serializable{
                 '}';
     }
 
-    public PreCondition(int id, String idref, ActionStatus actionStatus, DeonticStructuredClause clause) {
-        this.id = id;
+    public PreCondition( String idref, ActionStatus actionStatus, String withDelay, String validity) {
         this.idref = idref;
         this.actionStatus = actionStatus;
-        this.clause = clause;
+        this.withDelay = withDelay;
+        this.validity = validity;
     }
+
+    public String getIdref() {
+        return idref;
+    }
+
+    public void setIdref(String idref) {
+        this.idref = idref;
+    }
+
+    public ActionStatus getActionStatus() {
+        return actionStatus;
+    }
+
+    public void setActionStatus(ActionStatus actionStatus) {
+        this.actionStatus = actionStatus;
+    }
+
+    public String getWithDelay() {
+        return withDelay;
+    }
+
+    public void setWithDelay(String withDelay) {
+        this.withDelay = withDelay;
+    }
+
+    public String getValidity() {
+        return validity;
+    }
+
+    public void setValidity(String validity) {
+        this.validity = validity;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    
     
 }

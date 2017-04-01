@@ -41,7 +41,8 @@
                             <h3> Target Clause </h3> <br>
                             <div class="ferry ferry-from">
                                 <label>Precondition Id</label>
-                                <select name="PreConditionPartyRef">
+                                <select name="TargetRef">
+                                    <option value=""></option>
                                     <%
                                         Contract.Builder cb = (Contract.Builder) session.getAttribute("Contract");
                                         for (Body b : cb.build().getBody()) {
@@ -56,6 +57,7 @@
                             <div class="ferry ferry-from">
                                 <label>Precondition Id</label>
                                 <select name="PreConditionPartyRef">
+                                    <option value=""></option>
                                     <%
                                         cb = (Contract.Builder) session.getAttribute("Contract");
                                         for (Body b : cb.build().getBody()) {
@@ -77,7 +79,7 @@
                             </div>
                             <div class="ferry ferry-from">
                                 <label>Validity</label>
-                                <input class="date agileits w3layouts" name="PreConditionValidity" id="datepicker2" type="text" value="Date" onfocus="this.value = '';" onblur="if (this.value == '') {
+                                <input class="date agileits w3layouts" name="PreConditionValidity" id="datepicker1" type="text" value="Date" onfocus="this.value = '';" onblur="if (this.value == '') {
                                             this.value = '';
                                         }">
                             </div>
@@ -85,6 +87,7 @@
                             <div class="ferry ferry-from">
                                 <label>PostCondition Id</label>
                                 <select name="PostConditionPartyRef">
+                                    <option value=""></option>
                                     <%
                                         cb = (Contract.Builder) session.getAttribute("Contract");
                                         for (Body b : cb.build().getBody()) {
@@ -106,7 +109,7 @@
                             </div>
                             <div class="ferry ferry-from">
                                 <label>Validity</label>
-                                <input class="date agileits w3layouts" name="PostConditionValidity" id="datepicker3" type="text" value="Date" onfocus="this.value = '';" onblur="if (this.value == '') {
+                                <input class="date agileits w3layouts" name="PostConditionValidity" id="datepicker2" type="text" value="Date" onfocus="this.value = '';" onblur="if (this.value == '') {
                                             this.value = '';
                                         }">
                             </div>
@@ -122,7 +125,14 @@
         </div>
         <div class="w3lsfooteragileits">
             <p>  Design by <a href="http://github.com/5n10m" target="=_blank">5n10m</a></p>
-        </div><script type="text/javascript" >
+        </div>
+        <script src="js/jquery-ui.js"></script>
+        <script>
+            $(function () {
+                $("#datepicker,#datepicker1,#datepicker2").datepicker();
+            });
+        </script>
+        <script type="text/javascript" >
             function addanother() {
                 document.getElementById("NextAction").value = "AddAnother";
                 document.getElementById('SubmitButton').click();

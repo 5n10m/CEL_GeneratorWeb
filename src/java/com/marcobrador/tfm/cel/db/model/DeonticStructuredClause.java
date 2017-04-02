@@ -36,6 +36,7 @@ public abstract class DeonticStructuredClause implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @XmlElement(name = "PreCondition", namespace = "urn:mpeg:mpeg21:cel:core:2015")
     private Set<PreCondition> preConditions;
+    private Set<PostCondition> postConditions;
 
     @Embedded
     @XmlElement(name = "Subject", namespace = "urn:mpeg:mpeg21:cel:core:2015")
@@ -90,8 +91,20 @@ public abstract class DeonticStructuredClause implements Serializable {
         return constraint;
     }
 
+    public void setPreConditions(Set<PreCondition> preConditions) {
+        this.preConditions = preConditions;
+    }
+
+    public void setPostConditions(Set<PostCondition> postConditions) {
+        this.postConditions = postConditions;
+    }
+
     public Set<PreCondition> getPreConditions() {
         return preConditions;
+    }
+    
+     public Set<PostCondition> getPostConditions() {
+        return postConditions;
     }
 
     public Subject getSubject() {

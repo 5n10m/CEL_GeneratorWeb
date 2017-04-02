@@ -70,8 +70,10 @@
                             </div>
                             <div class="ferry ferry-from">
                                 <label>Action Status</label>
-                                <input type="text" name="PreConditionActionStarted" placeholder="Action started">
-                                <input type="text" name="PreConditionActionDone" placeholder="Action Done">
+                                <select name="PreConditionActionStatus">
+                                    <option value="ActionStarted">Action Started</option>
+                                    <option value="ActionDone">Action Done</option>
+                                </select>
                             </div>
                             <div class="ferry ferry-from">
                                 <label>Delay</label>
@@ -100,8 +102,12 @@
                             </div> 
                             <div class="ferry ferry-from">
                                 <label>Action Status</label>
-                                <input type="text" name="PostConditionActionStarted" placeholder="Action started">
-                                <input type="text" name="PostConditionActionDone" placeholder="Action Done">
+                                
+                                <label>Action Status</label>
+                                <select name="PostConditionActionStatus">
+                                    <option value="ActionStarted">Action Started</option>
+                                    <option value="ActionDone">Action Done</option>
+                                </select>
                             </div>
                             <div class="ferry ferry-from">
                                 <label>Delay</label>

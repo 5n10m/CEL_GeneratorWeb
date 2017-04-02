@@ -5,13 +5,11 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAttribute;
 
 /**
- * Class that represents the cel-core:PreCondition complex type.
+ *
+ * @author david
  */
-@Entity
-@Table(name = "pre_conditions")
-public class PreCondition implements Serializable{
-
-    @Id
+public class PostCondition implements Serializable{
+     @Id
     private Long id;
 
     public enum ActionStatus {
@@ -37,7 +35,7 @@ public class PreCondition implements Serializable{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PreCondition that = (PreCondition) o;
+        PostCondition that = (PostCondition) o;
 
         if (!idref.equals(that.idref)) return false;
         return actionStatus == that.actionStatus;
@@ -59,7 +57,7 @@ public class PreCondition implements Serializable{
                 '}';
     }
 
-    public PreCondition( String idref, ActionStatus actionStatus, String withDelay, String validity) {
+    public PostCondition( String idref, ActionStatus actionStatus, String withDelay, String validity) {
         this.idref = idref;
         this.actionStatus = actionStatus;
         this.withDelay = withDelay;
@@ -105,7 +103,4 @@ public class PreCondition implements Serializable{
     public void setId(Long id) {
         this.id = id;
     }
-
-    
-    
 }

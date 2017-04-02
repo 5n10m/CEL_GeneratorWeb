@@ -6,6 +6,7 @@
 package Servlets;
 
 import com.marcobrador.tfm.cel.db.model.Contract;
+import com.marcobrador.tfm.cel.db.model.PostCondition;
 import com.marcobrador.tfm.cel.db.model.PreCondition;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -41,22 +42,43 @@ public class PrePostConditions extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
-            if (request.getParameter("TargetRef").length() > 0){
-                if (request.getParameter("PreConditionPartyRef").length() > 0){
-                    
-                    PreCondition.ActionStatus as;
-                    as.ActionStarted = "a";
-                    
-                    PreCondition preC = new PreCondition();
-                }
-                if (request.getParameter("PostConditionPartyRef").length() > 0){
-                    
-                }
-            }
-            
-            /* COMO DESCARGAR EL ARCHIVO */
             HttpSession session = request.getSession(true);
             Contract.Builder cb = (Contract.Builder) session.getAttribute("Contract");
+            
+            
+            if (request.getParameter("TargetRef").length() > 0){
+                if (request.getParameter("PreConditionPartyRef").length() > 0){
+                    PreCondition.ActionStatus as = PreCondition.ActionStatus.ActionStarted;
+                    switch (request.getParameter("PreConditionActionStatus")) {
+                        case "ActionStarted":
+                            as = PreCondition.ActionStatus.ActionStarted;
+                            break;
+                        case "ActionDone":
+                            as = PreCondition.ActionStatus.ActionDone;
+                            break;
+                    }
+                    PreCondition preC = new PreCondition(request.getParameter("PreConditionPartyRef"),as,request.getParameter("PreConditionDelay"), request.getParameter("PreConditionValidity"));
+                    //COM colocar el precondition a on toca del target =)
+                    
+                }
+                if (request.getParameter("PostConditionPartyRef").length() > 0){
+                     PostCondition.ActionStatus as = PostCondition.ActionStatus.ActionStarted;
+                    switch (request.getParameter("PreConditionActionStatus")) {
+                        case "ActionStarted":
+                            as = PostCondition.ActionStatus.ActionStarted;
+                            break;
+                        case "ActionDone":
+                            as = PostCondition.ActionStatus.ActionDone;
+                            break;
+                    }
+                    PostCondition preC = new PostCondition(request.getParameter("PreConditionPartyRef"),as,request.getParameter("PreConditionDelay"), request.getParameter("PreConditionValidity"));
+                }
+            }
+            session.setAttribute("Contract", cb);
+            
+            /* COMO DESCARGAR EL ARCHIVO */
+            //HttpSession session = request.getSession(true);
+            //Contract.Builder cb = (Contract.Builder) session.getAttribute("Contract");
             Contract c = cb.build();
             //response.sendRedirect(ConditionalCreator.WriteContract(c));
             //response.setContentType("text/xml");

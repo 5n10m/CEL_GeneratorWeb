@@ -15,6 +15,7 @@ import java.io.FileWriter;
 import javax.servlet.ServletContext;
 import com.marcobrador.tfm.cel.db.model.*;
 import com.marcobrador.tfm.cel.db.model.DeonticStructuredClause;
+import com.marcobrador.tfm.cel.db.model.PreCondition;
 import org.xembly.Directives;
 import org.xembly.Xembler;
 public class ConditionalCreator {
@@ -109,11 +110,25 @@ public class ConditionalCreator {
                 Core.push();
                 Core.add("cel-core:" + d.getClass().getSimpleName());
                     Core.attr("Id",d.getId());
+                    /*PRECONDITIONS*/
+                    if (d.getPreConditions() != null && !d.getPreConditions().isEmpty() ){
+                        for (PreCondition preC: d.getPreConditions()){
+                            Core.push();
+                            Core.add("cel-core:PreCpndition");
+                                Core.attr("idref", preC.getIdref());
+                                Core.attr("actionStatus", preC.getActionStatus());
+                                if (preC.getWithDelay().length() > 0) Core.attr("withDelay", preC.getWithDelay());
+                                if (preC.getValidity().length() > 0)Core.attr("validity", preC.getValidity());
+                            Core.pop();
+                        }
+                    }
                     /*SUBJECT*/
-                    Core.push();
-                    Core.add("cel-core:Subject");
-                        Core.attr("PartyRef",d.getSubject().toString().replace("Subject: ", ""));
-                    Core.pop();
+                    if (d.getSubject().getPartyRef().length() > 0){
+                        Core.push();
+                        Core.add("cel-core:Subject");
+                            Core.attr("PartyRef",d.getSubject().getPartyRef());
+                        Core.pop();
+                    }
                     /*ACT*/
                     Core.push();
                     Core.add("cel-core:Act");
@@ -183,6 +198,19 @@ public class ConditionalCreator {
                         //break;
                     }
                     /*RESLUTANT OBJECT*/
+                    
+                    /*POSTCONDITION*/
+                    if (d.getPostConditions() != null && !d.getPostConditions().isEmpty() ){
+                        for (PostCondition postC: d.getPostConditions()){
+                            Core.push();
+                            Core.add("cel-core:PostCpndition");
+                                Core.attr("idref", postC.getIdref());
+                                Core.attr("actionStatus", postC.getActionStatus());
+                                if (postC.getWithDelay().length() > 0) Core.attr("withDelay", postC.getWithDelay());
+                                if (postC.getValidity().length() > 0)Core.attr("validity", postC.getValidity());
+                            Core.pop();
+                        }
+                    }
                     
                     /*ISSUER creo que no tengo de eso*/ 
                     

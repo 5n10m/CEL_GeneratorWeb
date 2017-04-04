@@ -66,7 +66,8 @@ public abstract class DeonticStructuredClause implements Serializable {
     private Contract contract;
 
     protected DeonticStructuredClause() {
-        // Required by JAXB
+        this.preConditions = new HashSet<PreCondition>();
+        this.postConditions = new HashSet<PostCondition>();
     }
 
     protected DeonticStructuredClause(Builder builder) {
@@ -166,7 +167,11 @@ public abstract class DeonticStructuredClause implements Serializable {
                 && Utils.safeCompare(this.issuer, other.issuer)
                 && Utils.safeCompare(this.resultantObject, other.resultantObject);
     }
-
+    
+    public boolean isSameId(String _id){
+        return this.id.equals(_id);
+    }
+    
     @Override
     public int hashCode() {
         return id.hashCode()

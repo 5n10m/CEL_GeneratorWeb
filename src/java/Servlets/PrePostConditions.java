@@ -5,13 +5,17 @@
  */
 package Servlets;
 
+import com.marcobrador.tfm.cel.db.model.Body;
 import com.marcobrador.tfm.cel.db.model.Contract;
+import com.marcobrador.tfm.cel.db.model.DeonticStructuredClause;
 import com.marcobrador.tfm.cel.db.model.PostCondition;
 import com.marcobrador.tfm.cel.db.model.PreCondition;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -41,13 +45,12 @@ public class PrePostConditions extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
+
             HttpSession session = request.getSession(true);
-            Contract.Builder cb = (Contract.Builder) session.getAttribute("Contract");
-            
-            
-            if (request.getParameter("TargetRef").length() > 0){
-                if (request.getParameter("PreConditionPartyRef").length() > 0){
+            Contract c = (Contract) session.getAttribute("Contract");
+
+            if (request.getParameter("TargetRef").length() > 0) {
+                if (request.getParameter("PreConditionPartyRef").length() > 0) {
                     PreCondition.ActionStatus as = PreCondition.ActionStatus.ActionStarted;
                     switch (request.getParameter("PreConditionActionStatus")) {
                         case "ActionStarted":
@@ -57,30 +60,58 @@ public class PrePostConditions extends HttpServlet {
                             as = PreCondition.ActionStatus.ActionDone;
                             break;
                     }
-                    PreCondition preC = new PreCondition(request.getParameter("PreConditionPartyRef"),as,request.getParameter("PreConditionDelay"), request.getParameter("PreConditionValidity"));
+                    PreCondition preC = new PreCondition(request.getParameter("PreConditionPartyRef"), as, request.getParameter("PreConditionDelay"), request.getParameter("PreConditionValidity"));
                     //COM colocar el precondition a on toca del target =)
-                    
+                    for (Body b : c.getBody()) {
+                        for (DeonticStructuredClause dsc : b.getOperativePart().getClauses()) {
+                            if (dsc.isSameId(request.getParameter("TargetRef")))  {
+                                Set<PreCondition> sPre = dsc.getPreConditions();
+                                if (sPre == null || sPre.isEmpty()) {
+                                    sPre = new HashSet<PreCondition>();
+                                    sPre.add(preC);
+                                } else{
+                                    sPre.add(preC);
+                                }
+                                dsc.setPreConditions(sPre);
+                            }
+                        }
+                    }
                 }
-                if (request.getParameter("PostConditionPartyRef").length() > 0){
-                     PostCondition.ActionStatus as = PostCondition.ActionStatus.ActionStarted;
+                if (request.getParameter("PostConditionPartyRef").length() > 0) {
+                    PostCondition.ActionStatus ast = PostCondition.ActionStatus.ActionStarted;
                     switch (request.getParameter("PreConditionActionStatus")) {
                         case "ActionStarted":
-                            as = PostCondition.ActionStatus.ActionStarted;
+                            ast = PostCondition.ActionStatus.ActionStarted;
                             break;
                         case "ActionDone":
-                            as = PostCondition.ActionStatus.ActionDone;
+                            ast = PostCondition.ActionStatus.ActionDone;
                             break;
                     }
-                    PostCondition preC = new PostCondition(request.getParameter("PreConditionPartyRef"),as,request.getParameter("PreConditionDelay"), request.getParameter("PreConditionValidity"));
+                    PostCondition postC = new PostCondition(request.getParameter("PreConditionPartyRef"), ast, request.getParameter("PreConditionDelay"), request.getParameter("PreConditionValidity"));
+                    for (Body b : c.getBody()) {
+                        for (DeonticStructuredClause dsc : b.getOperativePart().getClauses()) {
+                            if (dsc.isSameId(request.getParameter("TargetRef"))) {
+                                Set<PostCondition> sPost = dsc.getPostConditions();
+                                if (sPost == null || sPost.isEmpty()) {
+                                    sPost = new HashSet<PostCondition>();
+                                    sPost.add(postC);
+                                } else{
+                                    sPost.add(postC);
+                                }
+                                dsc.setPostConditions(sPost);
+                                                        }
+                        }
+                    }
                 }
             }
-            session.setAttribute("Contract", cb);
-            
+            session.setAttribute("Contract", c);
+
             /* COMO DESCARGAR EL ARCHIVO */
             //HttpSession session = request.getSession(true);
             //Contract.Builder cb = (Contract.Builder) session.getAttribute("Contract");
-            Contract c = cb.build();
+            //Contract c = cb.build();
             //response.sendRedirect(ConditionalCreator.WriteContract(c));
+            ConditionalCreator.WriteContract(c);
             //response.setContentType("text/xml");
             //response.setHeader("Content-Disposition", "attachment; filename=\"Contract.xml\"");
             //OutputStream outputStream = response.getOutputStream();
@@ -89,7 +120,7 @@ public class PrePostConditions extends HttpServlet {
             outputStream.flush();
             outputStream.close();*/
 
-            /*OutputStream outputStream = response.getOutputStream();
+ /*OutputStream outputStream = response.getOutputStream();
             FileInputStream in = new FileInputStream(ConditionalCreator.WriteContract(c));
             byte[] buffer = new byte[4096];
             int length;
@@ -98,7 +129,6 @@ public class PrePostConditions extends HttpServlet {
             }
             in.close();
             out.flush();*/
-
         } catch (Exception ex) {
             Logger.getLogger(PrePostConditions.class.getName()).log(Level.SEVERE, null, ex);
         }

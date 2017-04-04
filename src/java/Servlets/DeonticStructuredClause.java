@@ -193,6 +193,8 @@ public class DeonticStructuredClause extends HttpServlet implements Serializable
                     //Contract c = cb.build();
                     //out.print("<p>" + ConditionalCreator.WriteContract(c) + "</p>");
                     //RequestDispatcher rd2 = request.getRequestDispatcher("PrintContract.jsp");
+                    Contract c = cb.build();
+                    session.setAttribute("Contract", c);
                     RequestDispatcher rd2 = request.getRequestDispatcher("prePostConditions.jsp");                    
                     rd2.forward(request, response);
                     break;

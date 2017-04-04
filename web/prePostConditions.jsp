@@ -44,8 +44,8 @@
                                 <select name="TargetRef">
                                     <option value=""></option>
                                     <%
-                                        Contract.Builder cb = (Contract.Builder) session.getAttribute("Contract");
-                                        for (Body b : cb.build().getBody()) {
+                                        Contract cb = (Contract) session.getAttribute("Contract");
+                                        for (Body b : cb.getBody()) {
                                             for (DeonticStructuredClause d : b.getOperativePart().getClauses()) {
                                                 out.println("<option value=\"" + d.getId().toString() + "\">" + d.getId().toString() + "</option>");
                                             }
@@ -59,8 +59,8 @@
                                 <select name="PreConditionPartyRef">
                                     <option value=""></option>
                                     <%
-                                        cb = (Contract.Builder) session.getAttribute("Contract");
-                                        for (Body b : cb.build().getBody()) {
+                                        cb = (Contract) session.getAttribute("Contract");
+                                        for (Body b : cb.getBody()) {
                                             for (DeonticStructuredClause d : b.getOperativePart().getClauses()) {
                                                 out.println("<option value=\"" + d.getId().toString() + "\">" + d.getId().toString() + "</option>");
                                             }
@@ -91,8 +91,8 @@
                                 <select name="PostConditionPartyRef">
                                     <option value=""></option>
                                     <%
-                                        cb = (Contract.Builder) session.getAttribute("Contract");
-                                        for (Body b : cb.build().getBody()) {
+                                        cb = (Contract) session.getAttribute("Contract");
+                                        for (Body b : cb.getBody()) {
                                             for (DeonticStructuredClause d : b.getOperativePart().getClauses()) {
                                                 out.println("<option value=\"" + d.getId().toString() + "\">" + d.getId().toString() + "</option>");
                                             }
@@ -101,8 +101,6 @@
                                 </select>
                             </div> 
                             <div class="ferry ferry-from">
-                                <label>Action Status</label>
-                                
                                 <label>Action Status</label>
                                 <select name="PostConditionActionStatus">
                                     <option value="ActionStarted">Action Started</option>
@@ -120,7 +118,7 @@
                                         }">
                             </div>
                             <div class="wthreesubmitaits">
-                                <input type="button" id="AddAnotherButton" value="Add another Operative Part" name="AddAnother" onClick ="addanother()"/>
+                                <input type="button" id="AddAnotherButton" value="Add another Pre/Post Cindition" name="AddAnother" onClick ="addanother()"/>
                                 <input type="submit" id="SubmitButton" name="submit" value="End and Generate Contract">
                             </div>
                         </div>

@@ -62,30 +62,11 @@
                                 <label>Textual Part</label>
                                 <textarea id="message" name="TextualPart" placeholder="Textual contract version" title="Enter the analogical-textual Part if exists"></textarea>
                             </div>
-                            <!-- <h3> Precondition </h3> <br>
-                            <div class="ferry ferry-from">
-                                <label>Precondition Id</label>
-                                <input type="text" name="PreConditionId" placeholder="Id">
-                            </div>
-                            <div class="ferry ferry-from">
-                                <label>Action Status</label>
-                                <input type="text" name="PreConditionActionStarted" placeholder="Action started">
-                                <input type="text" name="PreConditionActionDone" placeholder="Action Done">
-                            </div>
-                            <div class="ferry ferry-from">
-                                <label>Delay</label>
-                                <input type="text" name="PreConditionDelay" placeholder="Delay" >
-                            </div>
-                            <div class="ferry ferry-from">
-                                <label>Validity</label>
-                                <input class="date agileits w3layouts" name="PreConditionValidity" id="datepicker2" type="text" value="Date" onfocus="this.value = '';" onblur="if (this.value == '') {
-                                            this.value = '';
-                                        }">
-                            </div> -->
                             <h3> Subject </h3> <br>
                             <div class="ferry ferry-from">
                                 <label>Party Reference</label>
                                 <select name="PartyRef">
+                                    <option value=""></option>
                                     <%
                                         Contract.Builder cb = (Contract.Builder) session.getAttribute("Contract");
                                         for (Party p : cb.build().getParties()) {
@@ -170,27 +151,7 @@
                                     <option value="RegionsOfVariant">RegionsOfVariant</option>
                                     <option value="Sequence">Sequence</option>
                                 </select>
-                            </div>
-                            <!--<h3> PostCondition </h3> <br>
-                            <div class="ferry ferry-from">
-                                <label>PostCondition Id</label>
-                                <input type="text" name="PostConditionId" placeholder="Id">
-                            </div> 
-                            <div class="ferry ferry-from">
-                                <label>Action Status</label>
-                                <input type="text" name="PostConditionActionStarted" placeholder="Action started">
-                                <input type="text" name="PostConditionActionDone" placeholder="Action Done">
-                            </div>
-                            <div class="ferry ferry-from">
-                                <label>Delay</label>
-                                <input type="text" name="PostConditionDelay" placeholder="Delay" >
-                            </div>
-                            <div class="ferry ferry-from">
-                                <label>Validity</label>
-                                <input class="date agileits w3layouts" name="PostConditionValidity" id="datepicker3" type="text" value="Date" onfocus="this.value = '';" onblur="if (this.value == '') {
-                                            this.value = '';
-                                        }">
-                            </div>-->
+                            </div>                            
                             <div class="wthreesubmitaits">
                                 <input type="button" id="AddAnotherButton" value="Add another Operative Part" name="AddAnother" onClick ="addanother()"/>
                                 <input type="submit" id="SubmitButton" name="submit" value="Continue to Pre/Post Conditions">

@@ -58,10 +58,12 @@ public class ConditionalCreator {
                         Core.add("dc:identifier");
                             Core.set(pbg.getIdentifier());
                         Core.pop();
-                        Core.push();
-                        Core.add("dc:description");
-                            Core.set(pbg.getDescription());
-                        Core.pop();
+                        if ( pbg.getDescription().length() > 0){
+                            Core.push();
+                            Core.add("dc:description");
+                                Core.set(pbg.getDescription());
+                            Core.pop();
+                        }
                         //ADD SIGNATORY
                     Core.pop();
                 }
@@ -76,10 +78,12 @@ public class ConditionalCreator {
                         Core.add("dc:identifier");
                             Core.set(pbg.getIdentifier());
                         Core.pop();
-                        Core.push();
-                        Core.add("dc:description");
-                            Core.set(pbg.getDescription());
-                        Core.pop();
+                        if ( pbg.getDescription().length() > 0){
+                            Core.push();
+                            Core.add("dc:description");
+                                Core.set(pbg.getDescription());
+                            Core.pop();
+                        }
                         //ADD SIGNATORY
                     Core.pop();
                 }
@@ -121,7 +125,7 @@ public class ConditionalCreator {
             for (DeonticStructuredClause d : op.getClauses()){
                 Core.push();
                 Core.add("cel-core:" + d.getClass().getSimpleName());
-                    Core.attr("Id",d.getId());
+                    Core.attr("id",d.getId());
                     /*PRECONDITIONS*/
                     if (d.getPreConditions() != null && !d.getPreConditions().isEmpty() ){
                         for (PreCondition preC: d.getPreConditions()){
@@ -170,6 +174,12 @@ public class ConditionalCreator {
                                         Core.push();
                                         Core.add("Id");
                                             Core.set(i.getRegion().getIdentifier());
+                                        Core.pop();
+                                    }
+                                    if(i.getRegion().getRegionClass().length()> 0){
+                                        Core.push();
+                                        Core.add("Start");
+                                            Core.set(i.getRegion().getRegionClass());
                                         Core.pop();
                                     }
                                     if(i.getRegion().getStart() > 0){

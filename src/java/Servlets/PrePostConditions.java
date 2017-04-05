@@ -5,6 +5,7 @@
  */
 package Servlets;
 
+import static Servlets.ConditionalCreator.WriteContract;
 import com.marcobrador.tfm.cel.db.model.Body;
 import com.marcobrador.tfm.cel.db.model.Contract;
 import com.marcobrador.tfm.cel.db.model.DeonticStructuredClause;
@@ -47,7 +48,7 @@ public class PrePostConditions extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (OutputStream os = response.getOutputStream()) {
+        try (OutputStream out = response.getOutputStream()) {
 
             HttpSession session = request.getSession(true);
             Contract c = (Contract) session.getAttribute("Contract");
@@ -116,20 +117,18 @@ public class PrePostConditions extends HttpServlet {
                     break;
                 case "Finish":
                     //ConditionalCreator.WriteContract(c);
-                    response.setContentType("text/plain");
-                    response.setHeader("Content-Disposition",
-                            "attachment;filename=Contract.xml");
+                    String filename = "Contract.xml";
                     ServletContext ctx = getServletContext();
-                    InputStream is = ctx.getResourceAsStream(ConditionalCreator.WriteContract(c, ctx.getContextPath().toString()));
-                    int read = 0;
-                    byte[] bytes = new byte[1024];
-                   //OutputStream os = response.getOutputStream();
-
-                    while ((read = is.read(bytes)) != -1) {
-                        os.write(bytes, 0, read);
+                    response.setContentType("text/xml");
+                    response.setContentType("APPLICATION/OCTET-STREAM");
+                    response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
+                    InputStream fileInputStream = new FileInputStream(ConditionalCreator.WriteContract(c, ctx.getRealPath("/").toString()));
+                    int i;
+                    while ((i = fileInputStream.read()) != -1) {
+                        out.write(i);
                     }
-                    os.flush();
-                    os.close();
+                    fileInputStream.close();
+                    out.close();
                     //response.sendRedirect(ConditionalCreator.WriteContract(c));
                     //RequestDispatcher rd2 = request.getRequestDispatcher("operativePart.jsp");
                     //rd2.forward(request, response);
@@ -137,20 +136,22 @@ public class PrePostConditions extends HttpServlet {
             }
 
             /* COMO DESCARGAR EL ARCHIVO */
-            //HttpSession session = request.getSession(true);
-            //Contract.Builder cb = (Contract.Builder) session.getAttribute("Contract");
-            //Contract c = cb.build();
-            //response.sendRedirect(ConditionalCreator.WriteContract(c));
-            //ConditionalCreator.WriteContract(c);
-            //response.setContentType("text/xml");
-            //response.setHeader("Content-Disposition", "attachment; filename=\"Contract.xml\"");
-            //OutputStream outputStream = response.getOutputStream();
-            /*String outputResult = ConditionalCreator.WriteContract(c);
-            outputStream.write(outputResult.getBytes());
-            outputStream.flush();
-            outputStream.close();*/
-
- /*OutputStream outputStream = response.getOutputStream();
+            /*String filename = "TheFile.xml";
+            String filepath = "F:\\";
+            //out = response.getWriter();
+            ConditionalCreator.WriteContract(filepath);
+            response.setContentType("APPLICATION/OCTET-STREAM");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
+            FileInputStream fileInputStream = new FileInputStream(filepath + filename);*/
+/*
+            int i;
+            while ((i = fileInputStream.read()) != -1) {
+                out.write(i);
+            }
+            fileInputStream.close();
+            out.close();
+*/
+            /*OutputStream outputStream = response.getOutputStream();
             FileInputStream in = new FileInputStream(ConditionalCreator.WriteContract(c));
             byte[] buffer = new byte[4096];
             int length;

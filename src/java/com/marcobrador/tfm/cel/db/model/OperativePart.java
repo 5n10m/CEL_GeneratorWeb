@@ -42,6 +42,9 @@ public class OperativePart implements Serializable{
     public Set<DeonticStructuredClause> getClauses() {
         return clauses;
     }
+    public Set<Statement> getStatemens() {
+        return statements;
+    }
 
     @Override
     public String toString() {

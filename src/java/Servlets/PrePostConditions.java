@@ -12,12 +12,15 @@ import com.marcobrador.tfm.cel.db.model.PostCondition;
 import com.marcobrador.tfm.cel.db.model.PreCondition;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,7 +47,7 @@ public class PrePostConditions extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try (OutputStream os = response.getOutputStream()) {
 
             HttpSession session = request.getSession(true);
             Contract c = (Contract) session.getAttribute("Contract");
@@ -64,12 +67,12 @@ public class PrePostConditions extends HttpServlet {
                     //COM colocar el precondition a on toca del target =)
                     for (Body b : c.getBody()) {
                         for (DeonticStructuredClause dsc : b.getOperativePart().getClauses()) {
-                            if (dsc.isSameId(request.getParameter("TargetRef")))  {
+                            if (dsc.isSameId(request.getParameter("TargetRef"))) {
                                 Set<PreCondition> sPre = dsc.getPreConditions();
                                 if (sPre == null || sPre.isEmpty()) {
                                     sPre = new HashSet<PreCondition>();
                                     sPre.add(preC);
-                                } else{
+                                } else {
                                     sPre.add(preC);
                                 }
                                 dsc.setPreConditions(sPre);
@@ -95,23 +98,50 @@ public class PrePostConditions extends HttpServlet {
                                 if (sPost == null || sPost.isEmpty()) {
                                     sPost = new HashSet<PostCondition>();
                                     sPost.add(postC);
-                                } else{
+                                } else {
                                     sPost.add(postC);
                                 }
                                 dsc.setPostConditions(sPost);
-                                                        }
+                            }
                         }
                     }
                 }
             }
             session.setAttribute("Contract", c);
 
+            switch (request.getParameter("NextAction")) {
+                case "AddAnother":
+                    RequestDispatcher rd = request.getRequestDispatcher("prePostConditions.jsp");
+                    rd.forward(request, response);
+                    break;
+                case "Finish":
+                    //ConditionalCreator.WriteContract(c);
+                    response.setContentType("text/plain");
+                    response.setHeader("Content-Disposition",
+                            "attachment;filename=Contract.xml");
+                    ServletContext ctx = getServletContext();
+                    InputStream is = ctx.getResourceAsStream(ConditionalCreator.WriteContract(c, ctx.getContextPath().toString()));
+                    int read = 0;
+                    byte[] bytes = new byte[1024];
+                   //OutputStream os = response.getOutputStream();
+
+                    while ((read = is.read(bytes)) != -1) {
+                        os.write(bytes, 0, read);
+                    }
+                    os.flush();
+                    os.close();
+                    //response.sendRedirect(ConditionalCreator.WriteContract(c));
+                    //RequestDispatcher rd2 = request.getRequestDispatcher("operativePart.jsp");
+                    //rd2.forward(request, response);
+                    break;
+            }
+
             /* COMO DESCARGAR EL ARCHIVO */
             //HttpSession session = request.getSession(true);
             //Contract.Builder cb = (Contract.Builder) session.getAttribute("Contract");
             //Contract c = cb.build();
             //response.sendRedirect(ConditionalCreator.WriteContract(c));
-            ConditionalCreator.WriteContract(c);
+            //ConditionalCreator.WriteContract(c);
             //response.setContentType("text/xml");
             //response.setHeader("Content-Disposition", "attachment; filename=\"Contract.xml\"");
             //OutputStream outputStream = response.getOutputStream();

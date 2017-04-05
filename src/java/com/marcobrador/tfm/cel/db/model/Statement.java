@@ -39,6 +39,14 @@ public class Statement  implements Serializable{
         this.value = value;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
     @Override
     public String toString() {
         return "ID: " + id + "\n"

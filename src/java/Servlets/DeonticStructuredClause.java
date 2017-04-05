@@ -174,7 +174,7 @@ public class DeonticStructuredClause extends HttpServlet implements Serializable
             }
 ///////////////////////////////////////////////////////
             if (CleanInvalid(request.getParameter("TextualPart")).length() > 0) {
-                opb.addStatement(new Statement(CleanInvalid(request.getParameter("OperativePartId")), CleanInvalid(request.getParameter("TextualPart"))));
+                opb.addStatement(new Statement("TP"+CleanInvalid(request.getParameter("OperativePartId")), CleanInvalid(request.getParameter("TextualPart"))));
             }
 
             Body b = new Body(opb.build());
@@ -204,7 +204,7 @@ public class DeonticStructuredClause extends HttpServlet implements Serializable
         }
     }
     protected String CleanInvalid(String s){
-        return s.replace(" ","").replace("<","").replace(">","").replace("&","").replace("'","");
+        return s.replace("<","").replace(">","").replace("&","").replace("'","");
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

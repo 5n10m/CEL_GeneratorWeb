@@ -20,7 +20,7 @@ import org.xembly.Directives;
 import org.xembly.Xembler;
 public class ConditionalCreator {
 
-    public static String WriteContract(Contract c) throws Exception {
+    public static String WriteContract(Contract c, String path) throws Exception {
         Directives Core = new Directives().add("cel-core:Contract");
         Core.attr("xmlns:cel-core","urn:mpeg:mpeg21:cel:core:2015");
         Core.attr("xmlns:cel-ipre","urn:mpeg:mpeg21:cel:ipre:2015");
@@ -99,11 +99,23 @@ public class ConditionalCreator {
             Core.pop();
         }
         //BODY
-        
         Core.push();
         Core.add("cel-core:Body");
         for (Body b : c.getBody()){
-        OperativePart op = b.getOperativePart();
+            OperativePart op = b.getOperativePart();
+        /*Textual part*/
+            for (Statement s: op.getStatemens()){
+                Core.push();
+                Core.add("cel-core:TextualPart");
+                    Core.attr("id", s.getId());
+                    Core.push();
+                    Core.add("cel-core:TextParagraph");
+                        Core.attr("id", s.getId()+"i");
+                        Core.set(s.getValue());
+                    Core.pop();
+                Core.pop();
+            }
+        /*Operative Part*/
             Core.push();
             Core.add("cel-core:OperativePart");
             for (DeonticStructuredClause d : op.getClauses()){
@@ -217,16 +229,20 @@ public class ConditionalCreator {
                     Core.pop();
                 Core.pop();
             }
-            Core.pop();
-        Core.pop();    
-        }
-        File outputFile = new File("/TheFile.xml");
+            Core.pop();   
+        }        
+        Core.pop(); 
+        
+        //String path = Thread.currentThread().getContextClassLoader().getResource("com/youpackage/");
+        
+        //ServletContext ctx = getServletContext();
+        File outputFile = new File(path + "/TheFile.xml");
         FileWriter fout = new FileWriter(outputFile);
         fout.write(new Xembler(Core).xml());
         fout.close();
         System.out.println(outputFile.getAbsolutePath());
         System.out.print(new Xembler(Core).xml());
         
-        return outputFile.getAbsolutePath();
+        return outputFile.getPath();
     }
 }

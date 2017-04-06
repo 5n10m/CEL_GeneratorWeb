@@ -16,7 +16,7 @@ public class FeePerInterval extends Fact {
 
     @Embedded
     @XmlElement(name = "rate", namespace = "urn:mpeg:mpeg21:2003:01-REL-SX-NS")
-    private Rate rate;
+    public Rate rate;
 
     @Column
     @Convert(converter = DurationConverter.class)
@@ -52,7 +52,7 @@ public class FeePerInterval extends Fact {
     }
 
     @Embeddable
-    private static class Rate {
+    public static class Rate {
 
         @Column
         @XmlElement(name = "amount", namespace = "urn:mpeg:mpeg21:2003:01-REL-SX-NS")

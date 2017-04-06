@@ -20,7 +20,7 @@ public class Notify extends Action {
 
     @Embedded
     @XmlElement(name = "About", namespace = "urn:mpeg:mpeg21:cel:pane:2015")
-    private About about;
+    public About about;
 
     private Notify() {
         // Required by JAXB
@@ -55,7 +55,7 @@ public class Notify extends Action {
     }
 
     @Embeddable
-    private static class Recipient {
+    public static class Recipient {
 
         @Column
         @XmlAttribute
@@ -63,7 +63,7 @@ public class Notify extends Action {
     }
 
     @Embeddable
-    private static class About {
+    public static class About {
 
         @Column
         @XmlAttribute

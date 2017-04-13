@@ -62,6 +62,9 @@ public class DeonticStructuredClause extends HttpServlet implements Serializable
                 case "Forensic":
                     a = new Forensic();
                     break;
+                case "MoreExperiments":
+                    a = new MoreExperiments();
+                    break;
                 default:
                     a = new View(); // para evitar el warning/error
                     break;

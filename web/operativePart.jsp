@@ -108,7 +108,7 @@
                                 <label>Type</label>
                                 <select id="ObjectType" name="ObjectType" onchange="onObjectTypeChange()">
                                     <option value="Item">Item</option>
-                                    <option value="Event">Event</option>
+                                    <!-- <option value="Event">Event</option>-->
                                     <option value="Subject">Subject</option>
                                     <!-- <option value="Service">Service</option> -->
                                 </select>
@@ -137,7 +137,7 @@
                                     <input type="text" name="RegionEnd" placeholder="End">
                                 </div>
                             </div>
-                            <h3> Resultant Object </h3><br>
+                            <!--<h3> Resultant Object </h3><br>
                             <div class="ferry ferry-from">
                                 <label>Item Identifier</label>
                                 <input type="text" name="ResultantObjectIdentifier" placeholder="IdRef">
@@ -151,7 +151,7 @@
                                     <option value="RegionsOfVariant">RegionsOfVariant</option>
                                     <option value="Sequence">Sequence</option>
                                 </select>
-                            </div>                            
+                            </div> -->                           
                             <div class="wthreesubmitaits">
                                 <input type="button" id="AddAnotherButton" value="Add another Operative Part" name="AddAnother" onClick ="addanother()"/>
                                 <input type="submit" id="SubmitButton" name="submit" value="Continue to Pre/Post Conditions">
@@ -198,7 +198,8 @@
                                         <select name="ItemType">\
                                             <option value="Alignment">Alignment</option>\
                                             <option value="AnonymizedGenomaData">AnonymizedGenomaData</option>\
-                                            <option value="CompleteGenome">CompleteGenome</option>\
+                                            <option value="CompleteGenome">CompleteGenome</option>\\n\
+                                            <option value="MoreExperiments">MoreExperiments</option>\
                                             <option value="NonAlignedReads">NonAlignedReads</option>\
                                             <option value="OutcomeGeneticAnalysis">OutcomeGeneticAnalysis</option>\
                                             <option value="RegionsOfVariant">RegionsOfVariant</option>\

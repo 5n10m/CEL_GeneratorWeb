@@ -116,8 +116,8 @@ public class PrePostConditions extends HttpServlet {
                     rd.forward(request, response);
                     break;
                 case "Finish":
-                    //ConditionalCreator.WriteContract(c);
-                    String filename = "Contract.xml";
+                    //String filename = "Contract.xml";
+                     String filename = c.getContractId() +".xml";
                     ServletContext ctx = getServletContext();
                     response.setContentType("text/xml");
                     response.setContentType("APPLICATION/OCTET-STREAM");

@@ -129,37 +129,9 @@ public class PrePostConditions extends HttpServlet {
                     }
                     fileInputStream.close();
                     out.close();
-                    //response.sendRedirect(ConditionalCreator.WriteContract(c));
-                    //RequestDispatcher rd2 = request.getRequestDispatcher("operativePart.jsp");
-                    //rd2.forward(request, response);
                     break;
             }
 
-            /* COMO DESCARGAR EL ARCHIVO */
-            /*String filename = "TheFile.xml";
-            String filepath = "F:\\";
-            //out = response.getWriter();
-            ConditionalCreator.WriteContract(filepath);
-            response.setContentType("APPLICATION/OCTET-STREAM");
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
-            FileInputStream fileInputStream = new FileInputStream(filepath + filename);*/
-/*
-            int i;
-            while ((i = fileInputStream.read()) != -1) {
-                out.write(i);
-            }
-            fileInputStream.close();
-            out.close();
-*/
-            /*OutputStream outputStream = response.getOutputStream();
-            FileInputStream in = new FileInputStream(ConditionalCreator.WriteContract(c));
-            byte[] buffer = new byte[4096];
-            int length;
-            while ((length = in.read(buffer)) > 0) {
-                outputStream.write(buffer, 0, length);
-            }
-            in.close();
-            out.flush();*/
         } catch (Exception ex) {
             Logger.getLogger(PrePostConditions.class.getName()).log(Level.SEVERE, null, ex);
         }

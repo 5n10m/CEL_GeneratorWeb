@@ -243,9 +243,6 @@ public class ConditionalCreator {
         }        
         Core.pop(); 
         
-        //String path = Thread.currentThread().getContextClassLoader().getResource("com/youpackage/");
-        
-        //ServletContext ctx = getServletContext();
         File outputFile = new File(path + "/TheFile.xml");
         FileWriter fout = new FileWriter(outputFile);
         fout.write(new Xembler(Core).xml());

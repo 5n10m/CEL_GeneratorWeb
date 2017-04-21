@@ -44,8 +44,8 @@ public class ConditionalCreator {
         //PARTYS
         for(Party p : c.getParties()){
             Core.push();
-            Core.add("cel-core:Party");
-                Core.attr("Id", p.getId());
+            Core.add("cel-gen:PartyGen");
+                Core.attr("id", p.getId());
                 PartyBasicGroup pbg = p.getPartyBasicGroup();
                 if(pbg.getType().equals("Organization")){
                     Core.push();
@@ -89,7 +89,7 @@ public class ConditionalCreator {
                 }
                 if (p.getAddress() != null){
                     Core.push();
-                    Core.add("dc:Address");
+                    Core.add("cel-core:Address");
                         Core.set(p.getAddress());
                     Core.pop();
                 }
@@ -111,11 +111,14 @@ public class ConditionalCreator {
             for (Statement s: op.getStatemens()){
                 Core.push();
                 Core.add("cel-core:TextualPart");
-                    Core.attr("id", s.getId());
                     Core.push();
-                    Core.add("cel-core:TextParagraph");
-                        Core.attr("id", s.getId()+"i");
-                        Core.set(s.getValue());
+                    Core.add("cel-core:TextClause");
+                        Core.attr("id", s.getId());
+                        Core.push();
+                        Core.add("cel-core:TextParagraph");
+                            Core.attr("id", s.getId()+"i");
+                            Core.set(s.getValue());
+                        Core.pop();
                     Core.pop();
                 Core.pop();
             }
@@ -142,7 +145,7 @@ public class ConditionalCreator {
                     if (d.getSubject().getPartyRef().length() > 0){
                         Core.push();
                         Core.add("cel-core:Subject");
-                            Core.attr("PartyRef",d.getSubject().getPartyRef());
+                            Core.attr("partyRef",d.getSubject().getPartyRef());
                         Core.pop();
                     }
                     /*ACT*/
@@ -161,7 +164,7 @@ public class ConditionalCreator {
                         //case "Item":
                         Item i = o.getItem();
                         Core.push();
-                        Core.add("cel-core:Item");
+                        Core.add("cel-gen:ItemType");
                             Core.attr("name",i.getName());
                             Core.push();
                             Core.add("dii:Identifier");
@@ -178,7 +181,7 @@ public class ConditionalCreator {
                                     }
                                     if(i.getRegion().getRegionClass().length()> 0){
                                         Core.push();
-                                        Core.add("Start");
+                                        Core.add("Class");
                                             Core.set(i.getRegion().getRegionClass());
                                         Core.pop();
                                     }
@@ -202,7 +205,7 @@ public class ConditionalCreator {
                     } else if(o.getEvent() != null){
                         Event e = o.getEvent();
                         Core.push();
-                        Core.add("cel-core:Item");
+                        Core.add("cel-core:Event");
                             Core.attr("name",e.getName());
                             Core.push();
                             Core.add("dii:Identifier");
@@ -215,7 +218,7 @@ public class ConditionalCreator {
                         DeonticStructuredClause.Issuer is = o.getIssuer(); /*AQUI QUIZAS HAY QUE REMODELAR UN POCO LA COSA*/
                         Core.push();
                         Core.add("cel-core:Subject");
-                            Core.attr("PartyRef",is.getPartyRef().replace("Issuer: ", ""));
+                            Core.attr("partyRef",is.getPartyRef().replace("Issuer: ", ""));
                         Core.pop();
                         //break;
                     }

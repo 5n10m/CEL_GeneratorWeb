@@ -77,13 +77,11 @@
                             </div>
                             <div class="ferry ferry-from">
                                 <label>Delay</label>
-                                <input type="text" name="PreConditionDelay" placeholder="Delay" >
+                                <input type="text" name="PreConditionDelay" placeholder="Delay on xs:duration format" >
                             </div>
                             <div class="ferry ferry-from">
                                 <label>Validity</label>
-                                <input class="date agileits w3layouts" name="PreConditionValidity" id="datepicker1" type="text" value="Date" onfocus="this.value = '';" onblur="if (this.value == '') {
-                                            this.value = '';
-                                        }">
+                                <input type="text" name="PreConditionValidity" placeholder="Validity on xs:duration format" >
                             </div>
                             <h3> PostCondition </h3> <br>
                             <div class="ferry ferry-from">
@@ -109,13 +107,12 @@
                             </div>
                             <div class="ferry ferry-from">
                                 <label>Delay</label>
-                                <input type="text" name="PostConditionDelay" placeholder="Delay" >
+                                <input type="text" name="PostConditionDelay" placeholder="Delay on xs:duration format" >
                             </div>
                             <div class="ferry ferry-from">
                                 <label>Validity</label>
-                                <input class="date agileits w3layouts" name="PostConditionValidity" id="datepicker2" type="text" value="Date" onfocus="this.value = '';" onblur="if (this.value == '') {
-                                            this.value = '';
-                                        }">
+                                
+                                <input type="text" name="PostConditionValidity" placeholder="Validity on xs:duration format" >
                             </div>
                             <div class="wthreesubmitaits">
                                 <input type="button" id="AddAnotherButton" value="Add another Pre/Post Cindition" name="AddAnother" onClick ="addanother()"/>

@@ -130,7 +130,7 @@ public class ConditionalCreator {
                     if (d.getPreConditions() != null && !d.getPreConditions().isEmpty() ){
                         for (PreCondition preC: d.getPreConditions()){
                             Core.push();
-                            Core.add("cel-core:PreCpndition");
+                            Core.add("cel-core:PreCondition");
                                 Core.attr("idref", preC.getIdref());
                                 Core.attr("actionStatus", preC.getActionStatus());
                                 if (preC.getWithDelay().length() > 0) Core.attr("withDelay", preC.getWithDelay());
@@ -225,7 +225,7 @@ public class ConditionalCreator {
                     if (d.getPostConditions() != null && !d.getPostConditions().isEmpty() ){
                         for (PostCondition postC: d.getPostConditions()){
                             Core.push();
-                            Core.add("cel-core:PostCpndition");
+                            Core.add("cel-core:PostCondition");
                                 Core.attr("idref", postC.getIdref());
                                 Core.attr("actionStatus", postC.getActionStatus());
                                 if (postC.getWithDelay().length() > 0) Core.attr("withDelay", postC.getWithDelay());

@@ -42,24 +42,19 @@ public class PartyOrganization extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
-            PartyBasicGroup pbg = new Person.Builder(CleanInvalid(request.getParameter("name")))
+            /*PartyBasicGroup pbg = new Person.Builder(CleanInvalid(request.getParameter("name")))
                     .setIdentifier(CleanInvalid(request.getParameter("identifier").replace(" ", "_")))
                     .setDescription(CleanInvalid(request.getParameter("description")))
                     .setDetails(CleanInvalid(request.getParameter("details")))
-                    .build();
+                    .build();*/
+            
             PartyBasicGroup p = new Organization.Builder(request.getParameter("oname"))
-                    .setSignatory(pbg)
                     .setDescription(CleanInvalid(request.getParameter("odescription")))
                     .setIdentifier(request.getParameter("oidentifier"))
                     .setDetails(request.getParameter("odetails"))
                     .build();
-            /*PartyBasicGroup.Builder ob = new Organization.Builder(request.getParameter("oname"));
-                    //ob.setSignatory(pbg);
-                    ob.setDescription(CleanInvalid(request.getParameter("odescription")));
-                    ob.setIdentifier("oidentifier");
-                    ob.setDetails("odetails");
-            PartyBasicGroup p = ob.build();*/
-            
+                    // .setSignatory(pbg)
+                    
             Party part = new Party.Builder(CleanInvalid(request.getParameter("oidentifier").replace(" ", "_")), p).setRol(request.getParameter("Rol")).setAddress(CleanInvalid(request.getParameter("oaddress"))).build();
 
             HttpSession session = request.getSession(true);

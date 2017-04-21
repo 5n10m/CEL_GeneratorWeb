@@ -50,8 +50,8 @@ public class PartyOrganization extends HttpServlet {
             PartyBasicGroup p = new Organization.Builder(request.getParameter("oname"))
                     .setSignatory(pbg)
                     .setDescription(CleanInvalid(request.getParameter("odescription")))
-                    .setIdentifier("oidentifier")
-                    .setDetails("odetails")
+                    .setIdentifier(request.getParameter("oidentifier"))
+                    .setDetails(request.getParameter("odetails"))
                     .build();
             /*PartyBasicGroup.Builder ob = new Organization.Builder(request.getParameter("oname"));
                     //ob.setSignatory(pbg);

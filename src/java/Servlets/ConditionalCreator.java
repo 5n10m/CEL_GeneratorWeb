@@ -23,11 +23,11 @@ public class ConditionalCreator {
     public static String WriteContract(Contract c, String path) throws Exception {
         Directives Core = new Directives().add("cel-core:Contract");
         Core.attr("xmlns:cel-core","urn:mpeg:mpeg21:cel:core:2015");
-        Core.attr("xmlns:cel-ipre","urn:mpeg:mpeg21:cel:ipre:2015");
+        Core.attr("xmlns:cel-gen","urn:mpeg:mpeg21:cel:gen:2017");
         Core.attr("xmlns:dc","http://purl.org/dc/elements/1.1/");
         Core.attr("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
         Core.attr("xmlns:dii","urn:mpeg:mpeg21:2002:01-DII-NS");
-        Core.attr("xsi:schemaLocation","urn:mpeg:mpeg21:cel:core:2015 cel-core.xsd urn:mpeg:mpeg21:cel:ipre:2015 cel-ipre.xsd");
+        Core.attr("xsi:schemaLocation","urn:mpeg:mpeg21:cel:core:2015 cel-core_v2.xsd urn:mpeg:mpeg21:cel:gen:2017 cel-gen_v4.xsd");
         Core.attr("xmlns:rel-r", "urn:mpeg:mpeg21:2003:01-REL-R-NS");
         
         
